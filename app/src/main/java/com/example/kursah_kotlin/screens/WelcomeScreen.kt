@@ -1,7 +1,9 @@
 package com.example.kursah_kotlin.screens
 
+import android.R.attr.width
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -22,6 +24,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -41,6 +45,9 @@ fun WelcomeScreen(
     onSkipClick: () -> Unit = {},
     onGoalSelected: (String) -> Unit = {}
 ) {
+    // Состояние для отслеживания выбранной кнопки
+    val selectedButton = remember { mutableStateOf<String?>(null) }
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -96,71 +103,142 @@ fun WelcomeScreen(
             )
 
             Spacer(modifier = Modifier.height(16.dp))
+
+            // Кнопка "Похудеть"
             Button(
-                onClick = {},
-                colors = ButtonDefaults.buttonColors(Color(238, 238, 238)),
-                shape = androidx.compose.foundation.shape.RoundedCornerShape(50.dp)
+                onClick = {
+                    selectedButton.value = "Похудеть"
+                    onGoalSelected("Похудеть")
+                },
+                modifier = Modifier
+                    .border(
+                        width = if (selectedButton.value == "Похудеть") 1.dp else 0.dp,
+                        color = if (selectedButton.value == "Похудеть") Color.Black else Color.Transparent,
+                        shape = RoundedCornerShape(50.dp)
+                    ),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = if (selectedButton.value == "Похудеть") Color.White else Color(238, 238, 238)
+                ),
+                shape = RoundedCornerShape(50.dp)
             ) {
                 Text(
                     "Похудеть",
-                    color = Color.Black,
-                    style = TextStyle(fontFamily = PlayfairDisplayFontFamily, fontSize = 16.sp)
+                    color = if (selectedButton.value == "Похудеть") Color.Black else Color.Black,
+                    style = TextStyle(fontFamily = PlayfairDisplayFontFamily, fontSize = 16.sp),
                 )
             }
+
             Spacer(modifier = Modifier.height(16.dp))
+
             Button(
-                onClick = {},
-                colors = ButtonDefaults.buttonColors(Color(238, 238, 238)),
-                shape = androidx.compose.foundation.shape.RoundedCornerShape(50.dp)
+                onClick = {
+                    selectedButton.value = "Набор массы"
+                    onGoalSelected("Набор массы")
+                },
+                modifier = Modifier
+                    .border(
+                        width = if (selectedButton.value == "Набор массы") 1.dp else 0.dp,
+                        color = if (selectedButton.value == "Набор массы") Color.Black else Color.Transparent,
+                        shape = RoundedCornerShape(50.dp)
+                    ),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = if (selectedButton.value == "Набор массы") Color.White else Color(238, 238, 238)
+                ),
+                shape = RoundedCornerShape(50.dp)
             ) {
                 Text(
                     "Набор массы",
-                    color = Color.Black,
+                    color = if (selectedButton.value == "Набор массы") Color.Black else Color.Black,
                     style = TextStyle(fontFamily = PlayfairDisplayFontFamily, fontSize = 16.sp)
                 )
             }
+
             Spacer(modifier = Modifier.height(16.dp))
+
             Button(
-                onClick = {},
-                colors = ButtonDefaults.buttonColors(Color(238, 238, 238)),
-                shape = androidx.compose.foundation.shape.RoundedCornerShape(50.dp)
+                onClick = {
+                    selectedButton.value = "Следить за питанием"
+                    onGoalSelected("Следить за питанием")
+                },
+                modifier = Modifier
+                    .border(
+                        width = if (selectedButton.value == "Следить за питанием") 1.dp else 0.dp,
+                        color = if (selectedButton.value == "Следить за питанием") Color.Black else Color.Transparent,
+                        shape = RoundedCornerShape(50.dp)
+                    ),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = if (selectedButton.value == "Следить за питанием") Color.White else Color(238, 238, 238)
+                ),
+                shape = RoundedCornerShape(50.dp)
             ) {
                 Text(
                     "Следить за питанием",
-                    color = Color.Black,
+                    color = if (selectedButton.value == "Следить за питанием") Color.Black else Color.Black,
                     style = TextStyle(fontFamily = PlayfairDisplayFontFamily, fontSize = 16.sp)
                 )
             }
+
             Spacer(modifier = Modifier.height(16.dp))
+
             Button(
-                onClick = {},
-                colors = ButtonDefaults.buttonColors(Color(238, 238, 238)),
-                shape = androidx.compose.foundation.shape.RoundedCornerShape(50.dp)
+                onClick = {
+                    selectedButton.value = "Поиск новых рецептов"
+                    onGoalSelected("Поиск новых рецептов")
+                },
+                modifier = Modifier
+                    .border(
+                        width = if (selectedButton.value == "Поиск новых рецептов") 1.dp else 0.dp,
+                        color = if (selectedButton.value == "Поиск новых рецептов") Color.Black else Color.Transparent,
+                        shape = RoundedCornerShape(50.dp)
+                    ),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = if (selectedButton.value == "Поиск новых рецептов") Color.White else Color(238, 238, 238)
+                ),
+                shape = RoundedCornerShape(50.dp)
             ) {
                 Text(
                     "Поиск новых рецептов",
-                    color = Color.Black,
+                    color = if (selectedButton.value == "Поиск новых рецептов") Color.Black else Color.Black,
                     style = TextStyle(fontFamily = PlayfairDisplayFontFamily, fontSize = 16.sp)
                 )
             }
+
             Spacer(modifier = Modifier.height(16.dp))
+
             Button(
-                onClick = {},
-                colors = ButtonDefaults.buttonColors(Color(238, 238, 238)),
-                shape = androidx.compose.foundation.shape.RoundedCornerShape(50.dp)
+                onClick = {
+                    selectedButton.value = "Для себя"
+                    onGoalSelected("Для себя")
+                },
+                modifier = Modifier
+                    .border(
+                        width = if (selectedButton.value == "Для себя") 1.dp else 0.dp,
+                        color = if (selectedButton.value == "Для себя") Color.Black else Color.Transparent,
+                        shape = RoundedCornerShape(50.dp)
+                    ),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = if (selectedButton.value == "Для себя") Color.White else Color(238, 238, 238),
+                ),
+                shape = RoundedCornerShape(50.dp)
             ) {
                 Text(
                     "Для себя",
-                    color = Color.Black,
+                    color = if (selectedButton.value == "Для себя") Color.Black else Color.Black,
                     style = TextStyle(fontFamily = PlayfairDisplayFontFamily, fontSize = 16.sp)
                 )
             }
-            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.BottomCenter) {
+
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.BottomCenter
+            ) {
                 Button(
                     onClick = {},
-                    modifier = Modifier.fillMaxWidth().padding(bottom = 120.dp)
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 120.dp)
                         .size(width = 100.dp, height = 55.dp),
-                    shape = androidx.compose.foundation.shape.RoundedCornerShape(13.dp),
+                    shape = RoundedCornerShape(13.dp),
                     colors = ButtonDefaults.buttonColors(containerColor = Color(193, 190, 190))
                 ) {
                     Text(
@@ -173,5 +251,3 @@ fun WelcomeScreen(
         }
     }
 }
-
-

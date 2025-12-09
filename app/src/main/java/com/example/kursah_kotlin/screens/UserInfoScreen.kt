@@ -227,8 +227,9 @@ fun InfoTextField(
                 modifier = Modifier.size(20.dp)
             )
         },
-        colors = TextFieldDefaults.textFieldColors(
-            containerColor = Color(238, 238, 238, 100),
+        colors = TextFieldDefaults.colors(
+            focusedContainerColor = Color(238, 238, 238, 100),
+            unfocusedContainerColor = Color(238, 238, 238, 100),
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent,
             cursorColor = Color.Black,

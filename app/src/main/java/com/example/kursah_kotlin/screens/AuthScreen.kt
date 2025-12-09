@@ -49,7 +49,7 @@ import com.example.kursah_kotlin.ui.theme.PlayfairDisplayFontFamily
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Preview
 @Composable
-fun AuthScreen() {
+fun AuthScreen(onContinue: () -> Unit = {}) {
     var loginText by remember { mutableStateOf("") }
     var passwordText by remember { mutableStateOf("") }
     var confirmPasswordText by remember { mutableStateOf("") }
@@ -100,7 +100,7 @@ fun AuthScreen() {
             Button(modifier = Modifier
                 .fillMaxWidth()
                 .size(100.dp, 55.dp)
-                .padding(horizontal = 16.dp), colors = ButtonDefaults.buttonColors(containerColor = Color(193, 190, 190)),shape = RoundedCornerShape(13.dp), onClick = {}) {
+                .padding(horizontal = 16.dp), colors = ButtonDefaults.buttonColors(containerColor = Color(193, 190, 190)),shape = RoundedCornerShape(13.dp), onClick = { onContinue() }) {
                 Text(
                     text = if (isRegisterMode) "Зарегистрироваться" else "Войти",
                     color = Color.Black,
@@ -129,7 +129,13 @@ fun AuthScreen() {
                 modifier = Modifier.fillMaxWidth()
             )
         }
-        Text("Продолжить без регистрации", modifier = Modifier.padding(bottom = 50.dp), style = TextStyle(fontFamily = PlayfairDisplayFontFamily, fontSize = 14.sp))
+        Text(
+            "Продолжить без регистрации",
+            modifier = Modifier
+                .padding(bottom = 50.dp)
+                .clickable { onContinue() },
+            style = TextStyle(fontFamily = PlayfairDisplayFontFamily, fontSize = 14.sp)
+        )
     }
 }
 
@@ -152,8 +158,9 @@ fun CustomTextField(
                 fontFamily = PlayfairDisplayFontFamily
             )
         },
-        colors = TextFieldDefaults.textFieldColors(
-            containerColor = Color.LightGray.copy(alpha = 0.3f),
+        colors = TextFieldDefaults.colors(
+            focusedContainerColor = Color.LightGray.copy(alpha = 0.3f),
+            unfocusedContainerColor = Color.LightGray.copy(alpha = 0.3f),
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent,
             cursorColor = Color.Black

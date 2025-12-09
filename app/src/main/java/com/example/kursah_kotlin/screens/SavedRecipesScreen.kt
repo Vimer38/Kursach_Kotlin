@@ -41,6 +41,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -64,6 +65,8 @@ fun SavedRecipesScreen(
 
     val categories = listOf(
         "Салаты" to listOf(
+            RecipeCard("Название блюда", "Краткое описание", null),
+            RecipeCard("Название блюда", "Краткое описание", null),
             RecipeCard("Название блюда", "Краткое описание", null),
             RecipeCard("Название блюда", "Краткое описание", null)
         ),
@@ -192,15 +195,25 @@ fun CategorySection(
         if (isExpanded && recipes.isNotEmpty()) {
             Spacer(modifier = Modifier.height(16.dp))
             
-            LazyRow(
-                horizontalArrangement = Arrangement.spacedBy(16.dp),
+            Column(
+                verticalArrangement = Arrangement.spacedBy(16.dp),
                 modifier = Modifier.fillMaxWidth()
             ) {
-                items(recipes) { recipe ->
-                    SavedRecipeCardItem(
-                        recipe = recipe,
-                        onClick = { onRecipeClick(recipe.title) }
-                    )
+                recipes.chunked(2).forEach { pair ->
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(16.dp),
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        pair.forEach { recipe ->
+                            SavedRecipeCardItem(
+                                recipe = recipe,
+                                onClick = { onRecipeClick(recipe.title) },
+                            )
+                        }
+                        if (pair.size == 1) {
+                            Spacer(modifier = Modifier.weight(1f))
+                        }
+                    }
                 }
             }
 
@@ -213,7 +226,7 @@ fun CategorySection(
                 Button(
                     onClick = onViewAllClick,
                     modifier = Modifier
-                        .width(132.dp)
+                        .width(150.dp)
                         .height(46.dp),
                     shape = RoundedCornerShape(50.dp),
                     colors = ButtonDefaults.buttonColors(
@@ -243,7 +256,24 @@ fun CategorySection(
     }
 }
 
-// RecipeCard уже определен в HomeScreen.kt, используем его
+@Composable
+fun SimpleWhiteFade() {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(100.dp)
+            .background(
+                Brush.verticalGradient(
+                    colors = listOf(
+                        Color.Transparent,
+                        Color.White.copy(alpha = 0.7f),
+                        Color.White.copy(alpha = 0.9f),
+                        Color.White
+                    )
+                )
+            )
+    )
+}
 
 @Composable
 fun SavedRecipeCardItem(

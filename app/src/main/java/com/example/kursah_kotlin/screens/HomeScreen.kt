@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
@@ -64,18 +65,16 @@ fun HomeScreen(
 ) {
     var searchText by remember { mutableStateOf("") }
     var selectedCategory by remember { mutableStateOf("Все") }
-    
+    var showAllRecommendations by remember { mutableStateOf(false) }
+    var showAllWeekly by remember { mutableStateOf(false) }
+
     val categories = listOf("Все", "Супы", "Горячее", "Десерты", "Завтраки", "Обеды")
-    val recommendations = listOf(
-        RecipeCard("Название блюда", "Краткое описание", "30 мин"),
-        RecipeCard("Название блюда", "Краткое описание", "30 мин"),
-        RecipeCard("Название блюда", "Краткое описание", "30 мин")
-    )
-    val weeklyRecipes = listOf(
-        RecipeCard("Название блюда", "Краткое описание", null),
-        RecipeCard("Название блюда", "Краткое описание", null),
-        RecipeCard("Название блюда", "Краткое описание", null)
-    )
+    val recommendations = List(10) { idx ->
+        RecipeCard("Название блюда ${idx + 1}", "Краткое описание", "30 мин")
+    }
+    val weeklyRecipes = List(10) { idx ->
+        RecipeCard("Название блюда ${idx + 1}", "Краткое описание", null)
+    }
 
     Scaffold(
         bottomBar = {
@@ -85,129 +84,154 @@ fun HomeScreen(
             )
         }
     ) { innerPadding ->
-        Column(
+        LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
                 .background(Color.White)
                 .padding(innerPadding)
-                .padding(horizontal = 24.dp)
+                .padding(horizontal = 24.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            Spacer(modifier = Modifier.height(16.dp))
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(12.dp)
-            ) {
-                Box(
-                    modifier = Modifier
-                        .size(48.dp)
-                        .background(Color(238, 238, 238), CircleShape)
-                )
-                Column {
-                    Text(
-                        text = "Доброе утро",
-                        style = TextStyle(
-                            fontFamily = PlayfairDisplayFontFamily,
-                            fontSize = 14.sp,
-                            color = Color.Black
-                        )
+            item {
+                Spacer(modifier = Modifier.height(16.dp))
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(12.dp)
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .size(48.dp)
+                            .background(Color(238, 238, 238), CircleShape)
                     )
-                    Text(
-                        text = userName,
-                        style = TextStyle(
-                            fontFamily = PlayfairDisplayFontFamily,
-                            fontSize = 16.sp,
-                            fontWeight = FontWeight.Normal,
-                            color = Color.Black
+                    Column {
+                        Text(
+                            text = "Доброе утро",
+                            style = TextStyle(
+                                fontFamily = PlayfairDisplayFontFamily,
+                                fontSize = 14.sp,
+                                color = Color.Black
+                            )
                         )
-                    )
+                        Text(
+                            text = userName,
+                            style = TextStyle(
+                                fontFamily = PlayfairDisplayFontFamily,
+                                fontSize = 16.sp,
+                                fontWeight = FontWeight.Normal,
+                                color = Color.Black
+                            )
+                        )
+                    }
                 }
             }
-
-            Spacer(modifier = Modifier.height(24.dp))
-            Text(
-                text = "Голодны?",
-                style = TextStyle(
-                    fontFamily = PlayfairDisplayFontFamily,
-                    fontSize = 25.sp,
-                    color = Color.Black
-                )
-            )
-            Text(
-                text = "Что приготовим сегодня?",
-                style = TextStyle(
-                    fontFamily = PlayfairDisplayFontFamily,
-                    fontSize = 25.sp,
-                    color = Color.Black
-                )
-            )
-
-            Spacer(modifier = Modifier.height(24.dp))
-
-            SearchBar(
-                value = searchText,
-                onValueChange = { searchText = it },
-                onSearchClick = onSearchClick
-            )
-
-            Spacer(modifier = Modifier.height(20.dp))
-
-            LazyRow(
-                horizontalArrangement = Arrangement.spacedBy(12.dp),
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                items(categories) { category ->
-                    CategoryChip(
-                        text = category,
-                        isSelected = category == selectedCategory,
-                        onClick = {
-                            selectedCategory = category
-                            onCategoryClick(category)
-                        }
+            item {
+                Text(
+                    text = "Голодны?",
+                    style = TextStyle(
+                        fontFamily = PlayfairDisplayFontFamily,
+                        fontSize = 25.sp,
+                        color = Color.Black
                     )
+                )
+                Text(
+                    text = "Что приготовим сегодня?",
+                    style = TextStyle(
+                        fontFamily = PlayfairDisplayFontFamily,
+                        fontSize = 25.sp,
+                        color = Color.Black
+                    )
+                )
+            }
+            item {
+                SearchBar(
+                    value = searchText,
+                    onValueChange = { searchText = it },
+                    onSearchClick = onSearchClick
+                )
+            }
+            item {
+                LazyRow(
+                    horizontalArrangement = Arrangement.spacedBy(12.dp),
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    items(categories) { category ->
+                        CategoryChip(
+                            text = category,
+                            isSelected = category == selectedCategory,
+                            onClick = {
+                                selectedCategory = category
+                                onCategoryClick(category)
+                            }
+                        )
+                    }
                 }
             }
-
-            Spacer(modifier = Modifier.height(32.dp))
-
-            SectionHeader(
-                title = "Рекомендации",
-                onSeeAllClick = { onSeeAllClick("Рекомендации") }
-            )
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            LazyRow(
-                horizontalArrangement = Arrangement.spacedBy(16.dp),
-                modifier = Modifier.fillMaxWidth()
-            ) {
+            item {
+                SectionHeader(
+                    title = "Рекомендации",
+                    onSeeAllClick = {
+                        showAllRecommendations = true
+                        onSeeAllClick("Рекомендации")
+                    }
+                )
+            }
+            if (showAllRecommendations) {
                 items(recommendations) { recipe ->
                     RecipeCardItem(
                         recipe = recipe,
                         onClick = { onRecipeClick(recipe.title) }
                     )
+                    Spacer(modifier = Modifier.height(12.dp))
+                }
+            } else {
+                item {
+                    LazyRow(
+                        horizontalArrangement = Arrangement.spacedBy(16.dp),
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        items(recommendations.take(5)) { recipe ->
+                            RecipeCardItem(
+                                recipe = recipe,
+                                onClick = { onRecipeClick(recipe.title) }
+                            )
+                        }
+                    }
                 }
             }
-
-            Spacer(modifier = Modifier.height(32.dp))
-            SectionHeader(
-                title = "Рецепты недели",
-                onSeeAllClick = { onSeeAllClick("Рецепты недели") }
-            )
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            LazyRow(
-                horizontalArrangement = Arrangement.spacedBy(16.dp),
-                modifier = Modifier.fillMaxWidth()
-            ) {
+            item {
+                SectionHeader(
+                    title = "Рецепты недели",
+                    onSeeAllClick = {
+                        showAllWeekly = true
+                        onSeeAllClick("Рецепты недели")
+                    }
+                )
+            }
+            if (showAllWeekly) {
                 items(weeklyRecipes) { recipe ->
                     RecipeCardItem(
                         recipe = recipe,
                         onClick = { onRecipeClick(recipe.title) }
                     )
+                    Spacer(modifier = Modifier.height(12.dp))
+                }
+            } else {
+                item {
+                    LazyRow(
+                        horizontalArrangement = Arrangement.spacedBy(16.dp),
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        items(weeklyRecipes.take(5)) { recipe ->
+                            RecipeCardItem(
+                                recipe = recipe,
+                                onClick = { onRecipeClick(recipe.title) }
+                            )
+                        }
+                    }
                 }
             }
+            item { Spacer(modifier = Modifier.height(80.dp)) }
         }
     }
 }
@@ -465,7 +489,7 @@ fun NavigationIcon(
             imageVector = icon,
             contentDescription = null,
             modifier = Modifier.size(20.dp),
-            tint = Color(60, 60, 60) 
+            tint = Color(60, 60, 60)
         )
     }
 }

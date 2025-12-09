@@ -104,7 +104,6 @@ fun WelcomeScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Кнопка "Похудеть"
             Button(
                 onClick = {
                     selectedButton.value = "Похудеть"

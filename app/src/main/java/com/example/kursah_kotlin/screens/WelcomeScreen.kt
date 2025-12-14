@@ -35,7 +35,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.platform.LocalContext
 import com.example.kursah_kotlin.R
+import com.example.kursah_kotlin.data.local.UserPreferences
 import com.example.kursah_kotlin.ui.theme.PlayfairDisplayFontFamily
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -45,6 +47,9 @@ fun WelcomeScreen(
     onSkipClick: () -> Unit = {},
     onGoalSelected: (String) -> Unit = {}
 ) {
+    val context = LocalContext.current
+    val userPreferences = remember { UserPreferences(context) }
+    
     // Состояние для отслеживания выбранной кнопки
     val selectedButton = remember { mutableStateOf<String?>(null) }
 
@@ -107,6 +112,7 @@ fun WelcomeScreen(
             Button(
                 onClick = {
                     selectedButton.value = "Похудеть"
+                    userPreferences.saveGoal("Похудеть")
                     onGoalSelected("Похудеть")
                 },
                 modifier = Modifier
@@ -132,6 +138,7 @@ fun WelcomeScreen(
             Button(
                 onClick = {
                     selectedButton.value = "Набор массы"
+                    userPreferences.saveGoal("Набор массы")
                     onGoalSelected("Набор массы")
                 },
                 modifier = Modifier
@@ -157,6 +164,7 @@ fun WelcomeScreen(
             Button(
                 onClick = {
                     selectedButton.value = "Следить за питанием"
+                    userPreferences.saveGoal("Следить за питанием")
                     onGoalSelected("Следить за питанием")
                 },
                 modifier = Modifier
@@ -182,6 +190,7 @@ fun WelcomeScreen(
             Button(
                 onClick = {
                     selectedButton.value = "Поиск новых рецептов"
+                    userPreferences.saveGoal("Поиск новых рецептов")
                     onGoalSelected("Поиск новых рецептов")
                 },
                 modifier = Modifier
@@ -207,6 +216,7 @@ fun WelcomeScreen(
             Button(
                 onClick = {
                     selectedButton.value = "Для себя"
+                    userPreferences.saveGoal("Для себя")
                     onGoalSelected("Для себя")
                 },
                 modifier = Modifier

@@ -37,7 +37,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.platform.LocalContext
 import com.example.kursah_kotlin.R
+import com.example.kursah_kotlin.data.local.UserPreferences
 import com.example.kursah_kotlin.ui.theme.PlayfairDisplayFontFamily
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -47,6 +49,9 @@ fun UserInfoScreen(
     onSkipClick: () -> Unit = {},
     onNextClick: () -> Unit = {}
 ) {
+    val context = LocalContext.current
+    val userPreferences = remember { UserPreferences(context) }
+    
     var firstName by remember { mutableStateOf("") }
     var lastName by remember { mutableStateOf("") }
     var age by remember { mutableStateOf("") }
@@ -176,7 +181,12 @@ fun UserInfoScreen(
                 )
             }
             Button(
-                onClick = onNextClick,
+                onClick = {
+                    userPreferences.saveFirstName(firstName)
+                    userPreferences.saveLastName(lastName)
+                    userPreferences.saveAge(age)
+                    onNextClick()
+                },
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
                     .fillMaxWidth()

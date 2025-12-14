@@ -72,6 +72,7 @@ import androidx.compose.material3.FilterChip
 import androidx.compose.material3.SheetState
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.runtime.mutableStateListOf
+import com.example.kursah_kotlin.data.local.UserPreferences
 import java.io.IOException
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -86,6 +87,14 @@ fun HomeScreen(
     onNavigationClick: (String) -> Unit = {}
 ) {
     val context = LocalContext.current
+
+    val userPreferences = remember { UserPreferences(context) }
+
+    var firstName by remember { mutableStateOf<String?>(null) }
+
+    LaunchedEffect(Unit) {
+        firstName = userPreferences.getFirstName()
+    }
 
     var searchText by remember { mutableStateOf("") }
     var selectedCategory by remember { mutableStateOf("Все") }
@@ -226,7 +235,7 @@ fun HomeScreen(
                             )
                         )
                         Text(
-                            text = userName,
+                            text = firstName.toString(),
                             style = TextStyle(
                                 fontFamily = PlayfairDisplayFontFamily,
                                 fontSize = 16.sp,

@@ -42,6 +42,8 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.platform.LocalContext
+import com.example.kursah_kotlin.data.local.UserPreferences
 import com.example.kursah_kotlin.ui.theme.ItalianaFontFamily
 import com.example.kursah_kotlin.ui.theme.PlayfairDisplayFontFamily
 
@@ -50,6 +52,9 @@ import com.example.kursah_kotlin.ui.theme.PlayfairDisplayFontFamily
 @Preview
 @Composable
 fun AuthScreen(onContinue: () -> Unit = {}) {
+    val context = LocalContext.current
+    val userPreferences = remember { UserPreferences(context) }
+    
     var loginText by remember { mutableStateOf("") }
     var passwordText by remember { mutableStateOf("") }
     var confirmPasswordText by remember { mutableStateOf("") }
@@ -100,7 +105,12 @@ fun AuthScreen(onContinue: () -> Unit = {}) {
             Button(modifier = Modifier
                 .fillMaxWidth()
                 .size(100.dp, 55.dp)
-                .padding(horizontal = 16.dp), colors = ButtonDefaults.buttonColors(containerColor = Color(193, 190, 190)),shape = RoundedCornerShape(13.dp), onClick = { onContinue() }) {
+                .padding(horizontal = 16.dp), colors = ButtonDefaults.buttonColors(containerColor = Color(193, 190, 190)),shape = RoundedCornerShape(13.dp), onClick = { 
+                    if (isRegisterMode && loginText.isNotEmpty()) {
+                        userPreferences.saveEmail(loginText)
+                    }
+                    onContinue() 
+                }) {
                 Text(
                     text = if (isRegisterMode) "Зарегистрироваться" else "Войти",
                     color = Color.Black,

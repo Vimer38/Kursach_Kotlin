@@ -38,9 +38,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.runtime.LaunchedEffect
 import com.example.kursah_kotlin.R
-import com.example.kursah_kotlin.data.local.UserPreferences
+import com.example.kursah_kotlin.data.local.DatabaseProvider
+import com.example.kursah_kotlin.data.repository.UserRepositoryImpl
+import com.google.firebase.auth.FirebaseAuth
 import com.example.kursah_kotlin.ui.theme.PlayfairDisplayFontFamily
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Preview
@@ -50,12 +56,28 @@ fun UserInfoScreen(
     onNextClick: () -> Unit = {}
 ) {
     val context = LocalContext.current
-    val userPreferences = remember { UserPreferences(context) }
+    val database = remember { DatabaseProvider.getDatabase(context) }
+    val userRepository = remember { UserRepositoryImpl(database) }
+    val currentUser = remember { FirebaseAuth.getInstance().currentUser }
     
     var firstName by remember { mutableStateOf("") }
     var lastName by remember { mutableStateOf("") }
     var age by remember { mutableStateOf("") }
     var photoName by remember { mutableStateOf("Имя") }
+    var nickname by remember { mutableStateOf("") }
+    
+    // Загружаем существующие данные пользователя
+    LaunchedEffect(currentUser?.uid) {
+        currentUser?.let { user ->
+            val userProfile = userRepository.getUserProfile(user.uid)
+            userProfile?.let {
+                firstName = it.firstName ?: ""
+                lastName = it.lastName ?: ""
+                age = it.age ?: ""
+                nickname = it.nickname ?: ""
+            }
+        }
+    }
 
     Scaffold(
         topBar = {
@@ -163,6 +185,25 @@ fun UserInfoScreen(
                 )
 
                 Spacer(modifier = Modifier.height(24.dp))
+                
+                Text(
+                    text = "Никнейм",
+                    style = TextStyle(
+                        fontFamily = PlayfairDisplayFontFamily,
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Normal
+                    ),
+                    modifier = Modifier.padding(bottom = 12.dp)
+                )
+
+                InfoTextField(
+                    value = nickname,
+                    onValueChange = { nickname = it },
+                    placeholder = "Никнейм",
+                    modifier = Modifier.fillMaxWidth()
+                )
+
+                Spacer(modifier = Modifier.height(24.dp))
 
                 Text(
                     text = "Загрузи свою фотографию",
@@ -182,10 +223,18 @@ fun UserInfoScreen(
             }
             Button(
                 onClick = {
-                    userPreferences.saveFirstName(firstName)
-                    userPreferences.saveLastName(lastName)
-                    userPreferences.saveAge(age)
-                    onNextClick()
+                    currentUser?.let { user ->
+                        CoroutineScope(Dispatchers.Main).launch {
+                            userRepository.updateUserProfile(
+                                userId = user.uid,
+                                firstName = firstName.takeIf { it.isNotEmpty() },
+                                lastName = lastName.takeIf { it.isNotEmpty() },
+                                age = age.takeIf { it.isNotEmpty() },
+                                nickname = nickname.takeIf { it.isNotEmpty() }
+                            )
+                            onNextClick()
+                        }
+                    } ?: onNextClick()
                 },
                 modifier = Modifier
                     .align(Alignment.BottomCenter)

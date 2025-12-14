@@ -36,9 +36,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.runtime.LaunchedEffect
 import com.example.kursah_kotlin.R
-import com.example.kursah_kotlin.data.local.UserPreferences
+import com.example.kursah_kotlin.data.local.DatabaseProvider
+import com.example.kursah_kotlin.data.repository.UserRepositoryImpl
+import com.google.firebase.auth.FirebaseAuth
 import com.example.kursah_kotlin.ui.theme.PlayfairDisplayFontFamily
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Preview
@@ -48,10 +54,23 @@ fun WelcomeScreen(
     onGoalSelected: (String) -> Unit = {}
 ) {
     val context = LocalContext.current
-    val userPreferences = remember { UserPreferences(context) }
+    val database = remember { DatabaseProvider.getDatabase(context) }
+    val userRepository = remember { UserRepositoryImpl(database) }
+    val currentUser = remember { FirebaseAuth.getInstance().currentUser }
     
     // Состояние для отслеживания выбранной кнопки
     val selectedButton = remember { mutableStateOf<String?>(null) }
+    
+    val saveGoal: (String) -> Unit = { goal ->
+        currentUser?.let { user ->
+            CoroutineScope(Dispatchers.Main).launch {
+                userRepository.updateUserProfile(
+                    userId = user.uid,
+                    goal = goal
+                )
+            }
+        }
+    }
 
     Scaffold(
         topBar = {
@@ -112,7 +131,7 @@ fun WelcomeScreen(
             Button(
                 onClick = {
                     selectedButton.value = "Похудеть"
-                    userPreferences.saveGoal("Похудеть")
+                    saveGoal("Похудеть")
                     onGoalSelected("Похудеть")
                 },
                 modifier = Modifier
@@ -138,7 +157,7 @@ fun WelcomeScreen(
             Button(
                 onClick = {
                     selectedButton.value = "Набор массы"
-                    userPreferences.saveGoal("Набор массы")
+                    saveGoal("Набор массы")
                     onGoalSelected("Набор массы")
                 },
                 modifier = Modifier
@@ -164,7 +183,7 @@ fun WelcomeScreen(
             Button(
                 onClick = {
                     selectedButton.value = "Следить за питанием"
-                    userPreferences.saveGoal("Следить за питанием")
+                    saveGoal("Следить за питанием")
                     onGoalSelected("Следить за питанием")
                 },
                 modifier = Modifier
@@ -190,7 +209,7 @@ fun WelcomeScreen(
             Button(
                 onClick = {
                     selectedButton.value = "Поиск новых рецептов"
-                    userPreferences.saveGoal("Поиск новых рецептов")
+                    saveGoal("Поиск новых рецептов")
                     onGoalSelected("Поиск новых рецептов")
                 },
                 modifier = Modifier
@@ -216,7 +235,7 @@ fun WelcomeScreen(
             Button(
                 onClick = {
                     selectedButton.value = "Для себя"
-                    userPreferences.saveGoal("Для себя")
+                    saveGoal("Для себя")
                     onGoalSelected("Для себя")
                 },
                 modifier = Modifier

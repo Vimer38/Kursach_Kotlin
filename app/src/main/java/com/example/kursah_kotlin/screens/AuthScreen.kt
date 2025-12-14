@@ -43,9 +43,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.platform.LocalContext
-import com.example.kursah_kotlin.data.local.UserPreferences
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.material3.CircularProgressIndicator
+import com.example.kursah_kotlin.data.local.DatabaseProvider
+import com.example.kursah_kotlin.data.repository.UserRepositoryImpl
 import com.example.kursah_kotlin.ui.theme.ItalianaFontFamily
 import com.example.kursah_kotlin.ui.theme.PlayfairDisplayFontFamily
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -53,12 +59,15 @@ import com.example.kursah_kotlin.ui.theme.PlayfairDisplayFontFamily
 @Composable
 fun AuthScreen(onContinue: () -> Unit = {}) {
     val context = LocalContext.current
-    val userPreferences = remember { UserPreferences(context) }
+    val database = remember { DatabaseProvider.getDatabase(context) }
+    val userRepository = remember { UserRepositoryImpl(database) }
     
     var loginText by remember { mutableStateOf("") }
     var passwordText by remember { mutableStateOf("") }
     var confirmPasswordText by remember { mutableStateOf("") }
     var selectedOption by remember { mutableStateOf("Войти") }
+    var isLoading by remember { mutableStateOf(false) }
+    var errorMessage by remember { mutableStateOf<String?>(null) }
     val isRegisterMode = selectedOption == "Зарегистрироваться"
     
     Column(
@@ -84,8 +93,11 @@ fun AuthScreen(onContinue: () -> Unit = {}) {
             Spacer(modifier = Modifier.height(25.dp))
             CustomTextField(
                 value = loginText,
-                onValueChange = { loginText = it },
-                placeholder = "Логин"
+                onValueChange = { 
+                    loginText = it
+                    errorMessage = null
+                },
+                placeholder = "Email"
             )
             Spacer(modifier = Modifier.height(10.dp))
             CustomTextField(
@@ -102,20 +114,83 @@ fun AuthScreen(onContinue: () -> Unit = {}) {
                 )
             }
             Spacer(modifier = Modifier.height(39.dp))
-            Button(modifier = Modifier
-                .fillMaxWidth()
-                .size(100.dp, 55.dp)
-                .padding(horizontal = 16.dp), colors = ButtonDefaults.buttonColors(containerColor = Color(193, 190, 190)),shape = RoundedCornerShape(13.dp), onClick = { 
-                    if (isRegisterMode && loginText.isNotEmpty()) {
-                        userPreferences.saveEmail(loginText)
-                    }
-                    onContinue() 
-                }) {
+            
+            errorMessage?.let { error ->
                 Text(
-                    text = if (isRegisterMode) "Зарегистрироваться" else "Войти",
-                    color = Color.Black,
-                    style = TextStyle(fontSize = 16.sp, fontFamily = PlayfairDisplayFontFamily)
+                    text = error,
+                    color = Color.Red,
+                    style = TextStyle(
+                        fontFamily = PlayfairDisplayFontFamily,
+                        fontSize = 14.sp
+                    ),
+                    modifier = Modifier.padding(bottom = 8.dp)
                 )
+            }
+            
+            Button(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .size(100.dp, 55.dp)
+                    .padding(horizontal = 16.dp),
+                colors = ButtonDefaults.buttonColors(containerColor = Color(193, 190, 190)),
+                shape = RoundedCornerShape(13.dp),
+                onClick = {
+                    if (isLoading) return@Button
+                    
+                    errorMessage = null
+                    
+                    if (loginText.isEmpty() || passwordText.isEmpty()) {
+                        errorMessage = "Заполните все поля"
+                        return@Button
+                    }
+                    
+                    if (isRegisterMode) {
+                        if (confirmPasswordText != passwordText) {
+                            errorMessage = "Пароли не совпадают"
+                            return@Button
+                        }
+                        if (passwordText.length < 6) {
+                            errorMessage = "Пароль должен содержать минимум 6 символов"
+                            return@Button
+                        }
+                    }
+                    
+                    isLoading = true
+                    CoroutineScope(Dispatchers.Main).launch {
+                        val result = if (isRegisterMode) {
+                            userRepository.signUp(loginText, passwordText)
+                        } else {
+                            userRepository.signIn(loginText, passwordText)
+                        }
+                        
+                        isLoading = false
+                        result.onSuccess {
+                            onContinue()
+                        }.onFailure { exception ->
+                            errorMessage = when {
+                                exception.message?.contains("email") == true -> "Неверный email"
+                                exception.message?.contains("password") == true -> "Неверный пароль"
+                                exception.message?.contains("already") == true -> "Пользователь уже существует"
+                                exception.message?.contains("network") == true -> "Проблема с сетью"
+                                else -> exception.message ?: "Ошибка авторизации"
+                            }
+                        }
+                    }
+                },
+                enabled = !isLoading
+            ) {
+                if (isLoading) {
+                    CircularProgressIndicator(
+                        modifier = Modifier.size(24.dp),
+                        color = Color.Black
+                    )
+                } else {
+                    Text(
+                        text = if (isRegisterMode) "Зарегистрироваться" else "Войти",
+                        color = Color.Black,
+                        style = TextStyle(fontSize = 16.sp, fontFamily = PlayfairDisplayFontFamily)
+                    )
+                }
             }
             Spacer(modifier = Modifier.height(19.dp))
             Text(

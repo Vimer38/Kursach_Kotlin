@@ -40,8 +40,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.kursah_kotlin.R
-import com.example.kursah_kotlin.data.local.UserPreferences
+import com.example.kursah_kotlin.data.local.DatabaseProvider
+import com.example.kursah_kotlin.data.repository.UserRepositoryImpl
+import com.google.firebase.auth.FirebaseAuth
 import com.example.kursah_kotlin.ui.theme.PlayfairDisplayFontFamily
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Preview
@@ -51,7 +56,9 @@ fun ProfileScreen(
     onNavigationClick: (String) -> Unit = {}
 ) {
     val context = LocalContext.current
-    val userPreferences = remember { UserPreferences(context) }
+    val database = remember { DatabaseProvider.getDatabase(context) }
+    val userRepository = remember { UserRepositoryImpl(database) }
+    val currentUser = remember { FirebaseAuth.getInstance().currentUser }
 
     var firstName by remember { mutableStateOf<String?>(null) }
     var lastName by remember { mutableStateOf<String?>(null) }
@@ -59,14 +66,26 @@ fun ProfileScreen(
     var email by remember { mutableStateOf<String?>(null) }
     var goal by remember { mutableStateOf<String?>(null) }
     var photoPath by remember { mutableStateOf<String?>(null) }
+    var nickname by remember { mutableStateOf<String?>(null) }
 
-    LaunchedEffect(Unit) {
-        firstName = userPreferences.getFirstName()
-        lastName = userPreferences.getLastName()
-        age = userPreferences.getAge()
-        email = userPreferences.getEmail()
-        goal = userPreferences.getGoal()
-        photoPath = userPreferences.getPhotoPath()
+    LaunchedEffect(currentUser?.uid) {
+        currentUser?.let { user ->
+            CoroutineScope(Dispatchers.IO).launch {
+                val userProfile = userRepository.getUserProfile(user.uid)
+                userProfile?.let {
+                    firstName = it.firstName
+                    lastName = it.lastName
+                    age = it.age
+                    email = it.email
+                    goal = it.goal
+                    photoPath = it.photoPath
+                    nickname = it.nickname
+                } ?: run {
+                    // Если данных нет, используем email из Firebase
+                    email = user.email
+                }
+            }
+        }
     }
 
     Scaffold(
@@ -189,6 +208,13 @@ fun ProfileScreen(
             ProfileInfoItem(
                 label = "Цель использования",
                 value = goal ?: "Не указана"
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            ProfileInfoItem(
+                label = "Никнейм",
+                value = nickname ?: "Не указан"
             )
 
             Spacer(modifier = Modifier.height(100.dp))

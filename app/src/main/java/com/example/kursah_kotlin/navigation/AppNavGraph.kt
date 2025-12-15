@@ -9,6 +9,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.kursah_kotlin.screens.AuthScreen
 import com.example.kursah_kotlin.screens.HomeScreen
+import com.example.kursah_kotlin.screens.ProfileScreen
 import com.example.kursah_kotlin.screens.RecipeDetailScreen
 import com.example.kursah_kotlin.screens.SavedRecipesScreen
 import com.example.kursah_kotlin.screens.UserInfoScreen
@@ -20,6 +21,7 @@ object Destinations {
     const val UserInfo = "user_info"
     const val Home = "home"
     const val Saved = "saved"
+    const val Profile = "profile"
     const val RecipeDetail = "recipe_detail"
     const val RecipeDetailRoute = "recipe_detail/{recipeId}"
 
@@ -97,6 +99,13 @@ fun AppNavHost(navController: NavHostController = rememberNavController()) {
             )
         }
 
+        composable(Destinations.Profile) {
+            ProfileScreen(
+                onBackClick = { navController.popBackStack() },
+                onNavigationClick = { handleBottomNav(it, navController) }
+            )
+        }
+
         composable(
             route = Destinations.RecipeDetailRoute,
             arguments = listOf(
@@ -108,7 +117,8 @@ fun AppNavHost(navController: NavHostController = rememberNavController()) {
         ) {
             RecipeDetailScreen(
                 onBackClick = { navController.popBackStack() },
-                onNavigationClick = { handleBottomNav(it, navController) }
+                onNavigationClick = { handleBottomNav(it, navController) },
+                recipeId = it.arguments?.getString("recipeId") ?: ""
             )
         }
     }
@@ -119,7 +129,7 @@ private fun handleBottomNav(tab: String, navController: NavHostController) {
         "home" -> navController.navigateSingleTop(Destinations.Home)
         "search" -> navController.navigateSingleTop(Destinations.Home)
         "bookmark" -> navController.navigateSingleTop(Destinations.Saved)
-        "profile" -> navController.navigateSingleTop(Destinations.UserInfo)
+        "profile" -> navController.navigateSingleTop(Destinations.Profile)
     }
 }
 

@@ -39,27 +39,20 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.layout.ContentScale
-import coil.compose.AsyncImage
-import com.example.kursah_kotlin.data.remote.NetworkModule
 import com.example.kursah_kotlin.ui.theme.PlayfairDisplayFontFamily
-import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 @OptIn(ExperimentalMaterial3Api::class)
-@Preview
 @Composable
 fun SavedRecipesScreen(
     onBackClick: () -> Unit = {},
@@ -67,54 +60,56 @@ fun SavedRecipesScreen(
     onViewAllClick: (String) -> Unit = {},
     onNavigationClick: (String) -> Unit = {}
 ) {
-    var expandedCategories by remember {
-        mutableStateOf(setOf("Салаты"))
-    }
+    val context = androidx.compose.ui.platform.LocalContext.current
+    var expandedCategories by remember { mutableStateOf(setOf<String>()) }
+    var categories by remember { mutableStateOf<List<Pair<String, List<RecipeCard>>>>(emptyList()) }
+    var isLoading by remember { mutableStateOf(true) }
 
-    // Категории: название на экране -> категория TheMealDB
-    val mealDbCategories = listOf(
-        "Салаты" to "Seafood",
-        "Завтраки" to "Breakfast",
-        "Супы" to "Side",
-        "Обеды" to "Beef",
-        "Десерты" to "Dessert"
-    )
-
-    val api = remember {
-        NetworkModule.provideApiService(
-            NetworkModule.provideRetrofit(NetworkModule.provideOkHttp())
-        )
-    }
-
-    var recipesByCategory by remember {
-        mutableStateOf<Map<String, List<RecipeCard>>>(emptyMap())
-    }
-
-    val errorHandler = remember {
-        CoroutineExceptionHandler { _, _ -> }
-    }
-
-    val scope = rememberCoroutineScope()
-
-    // Подтягиваем по 4 рецепта на категорию из TheMealDB
-    LaunchedEffect(Unit) {
-        mealDbCategories.forEach { (title, apiCategory) ->
-            scope.launch(errorHandler) {
-                val remote = api.getMealsByCategory(apiCategory)
-                val cards = remote.meals.orEmpty().take(4).map {
-                    RecipeCard(
-                        title = it.strMeal,
-                        description = apiCategory,
-                        time = null
-                    )
+    // Загружаем избранные рецепты из базы данных
+    androidx.compose.runtime.LaunchedEffect(Unit) {
+        kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
+            try {
+                val db = com.example.kursah_kotlin.data.local.DatabaseProvider.getDatabase(context)
+                val favoriteEntities = db.recipeDao().getFavorites()
+                
+                // Загружаем полные данные рецептов из JSON
+                val jsonString = context.assets.open("recipes.json").bufferedReader().use { it.readText() }
+                val type = object : com.google.gson.reflect.TypeToken<List<com.example.kursah_kotlin.data.remote.dto.RecipeDto>>() {}.type
+                val allRecipes = com.google.gson.Gson().fromJson<List<com.example.kursah_kotlin.data.remote.dto.RecipeDto>>(jsonString, type) ?: emptyList()
+                
+                // Фильтруем только избранные
+                val favoriteIds = favoriteEntities.map { it.id }.toSet()
+                val favorites = allRecipes.filter { favoriteIds.contains(it.id) }
+                
+                // Группируем по категориям
+                val grouped = favorites
+                    .groupBy { it.category ?: "Без категории" }
+                    .map { (category, recipes) ->
+                        category to recipes.map { recipe ->
+                            RecipeCard(
+                                id = recipe.id ?: "",
+                                title = recipe.title ?: "Без названия",
+                                description = recipe.description ?: "Нет описания",
+                                time = recipe.timeMinutes?.let { "$it мин" }
+                            )
+                        }
+                    }
+                
+                kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.Main) {
+                    categories = grouped
+                    isLoading = false
+                    // Раскрываем первую категорию
+                    if (grouped.isNotEmpty()) {
+                        expandedCategories = setOf(grouped.first().first)
+                    }
                 }
-                recipesByCategory = recipesByCategory + (title to cards)
+            } catch (e: Exception) {
+                e.printStackTrace()
+                kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.Main) {
+                    isLoading = false
+                }
             }
         }
-    }
-
-    val categories = mealDbCategories.map { (title, _) ->
-        title to (recipesByCategory[title] ?: emptyList())
     }
 
     Scaffold(
@@ -130,7 +125,7 @@ fun SavedRecipesScreen(
                     ) {
                         Icon(
                             imageVector = Icons.Outlined.ArrowBack,
-                            contentDescription = "Back",
+                            contentDescription = "Назад",
                             modifier = Modifier.size(24.dp),
                             tint = Color.Black
                         )
@@ -164,36 +159,94 @@ fun SavedRecipesScreen(
             )
         }
     ) { innerPadding ->
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(Color.White)
-                .padding(innerPadding)
-                .padding(horizontal = 24.dp)
-        ) {
-            categories.forEachIndexed { index, (category, recipes) ->
-                item {
-                    CategorySection(
-                        category = category,
-                        recipes = recipes,
-                        isExpanded = expandedCategories.contains(category),
-                        onToggleExpand = {
-                            expandedCategories = if (expandedCategories.contains(category)) {
-                                expandedCategories - category
-                            } else {
-                                expandedCategories + category
-                            }
-                        },
-                        onRecipeClick = onRecipeClick,
-                        onViewAllClick = { onViewAllClick(category) }
+        when {
+            isLoading -> {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(innerPadding),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = "Загрузка...",
+                        style = TextStyle(
+                            fontFamily = PlayfairDisplayFontFamily,
+                            fontSize = 16.sp,
+                            color = Color.Gray
+                        )
                     )
-                    if (index < categories.size - 1) {
-                        Spacer(modifier = Modifier.height(16.dp))
+                }
+            }
+            categories.isEmpty() -> {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(innerPadding),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.spacedBy(12.dp)
+                    ) {
+                        Icon(
+                            imageVector = Icons.Outlined.Bookmark,
+                            contentDescription = null,
+                            modifier = Modifier.size(64.dp),
+                            tint = Color.LightGray
+                        )
+                        Text(
+                            text = "Нет сохраненных рецептов",
+                            style = TextStyle(
+                                fontFamily = PlayfairDisplayFontFamily,
+                                fontSize = 18.sp,
+                                fontWeight = FontWeight.Medium,
+                                color = Color.Gray
+                            )
+                        )
+                        Text(
+                            text = "Добавьте рецепты в избранное",
+                            style = TextStyle(
+                                fontFamily = PlayfairDisplayFontFamily,
+                                fontSize = 14.sp,
+                                color = Color.LightGray
+                            )
+                        )
                     }
                 }
             }
-            item {
-                Spacer(modifier = Modifier.height(100.dp))
+            else -> {
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(Color.White)
+                        .padding(innerPadding)
+                        .padding(horizontal = 24.dp)
+                ) {
+                    categories.forEachIndexed { index, (category, recipes) ->
+                        item {
+                            CategorySection(
+                                category = category,
+                                recipes = recipes,
+                                isExpanded = expandedCategories.contains(category),
+                                onToggleExpand = {
+                                    expandedCategories = if (expandedCategories.contains(category)) {
+                                        expandedCategories - category
+                                    } else {
+                                        expandedCategories + category
+                                    }
+                                },
+                                onRecipeClick = onRecipeClick,
+                                onViewAllClick = { onViewAllClick(category) }
+                            )
+                            if (index < categories.size - 1) {
+                                Spacer(modifier = Modifier.height(16.dp))
+                            }
+                        }
+                    }
+                    item {
+                        Spacer(modifier = Modifier.height(100.dp))
+                    }
+                }
             }
         }
     }
@@ -248,8 +301,7 @@ fun CategorySection(
                         pair.forEach { recipe ->
                             SavedRecipeCardItem(
                                 recipe = recipe,
-                                onClick = { onRecipeClick(recipe.title) },
-                                modifier = Modifier.weight(1f)
+                                onClick = { onRecipeClick(recipe.id) },
                             )
                         }
                         if (pair.size == 1) {
@@ -320,11 +372,10 @@ fun SimpleWhiteFade() {
 @Composable
 fun SavedRecipeCardItem(
     recipe: RecipeCard,
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier
+    onClick: () -> Unit
 ) {
     Column(
-        modifier = modifier
+        modifier = Modifier
             .size(width = 180.dp, height = 240.dp)
             .clickable { onClick() }
     ) {
@@ -334,20 +385,9 @@ fun SavedRecipeCardItem(
                 .height(140.dp)
                 .background(Color(238, 238, 238), RoundedCornerShape(12.dp))
         ) {
-            if (recipe.imageUrl != null) {
-                AsyncImage(
-                    model = recipe.imageUrl,
-                    contentDescription = recipe.title,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(140.dp)
-                        .clip(RoundedCornerShape(12.dp)),
-                    contentScale = ContentScale.Crop
-                )
-            }
             Icon(
                 imageVector = Icons.Outlined.Bookmark,
-                contentDescription = "Bookmarked",
+                contentDescription = "В закладках",
                 modifier = Modifier
                     .padding(12.dp)
                     .size(20.dp),

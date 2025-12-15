@@ -191,7 +191,7 @@ fun CategorySection(
 
         if (isExpanded && recipes.isNotEmpty()) {
             Spacer(modifier = Modifier.height(16.dp))
-            
+
             LazyRow(
                 horizontalArrangement = Arrangement.spacedBy(16.dp),
                 modifier = Modifier.fillMaxWidth()
@@ -213,7 +213,7 @@ fun CategorySection(
                 Button(
                     onClick = onViewAllClick,
                     modifier = Modifier
-                        .width(132.dp)
+                        .width(150.dp)
                         .height(46.dp),
                     shape = RoundedCornerShape(50.dp),
                     colors = ButtonDefaults.buttonColors(

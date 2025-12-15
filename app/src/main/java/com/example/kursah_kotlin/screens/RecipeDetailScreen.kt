@@ -78,7 +78,6 @@ fun RecipeDetailScreen(
         val found = loadRecipeById(context, recipeId)
         recipe = found
         
-        // Загружаем состояние избранного из базы данных
         if (recipeId.isNotBlank()) {
             withContext(Dispatchers.IO) {
                 val db = com.example.kursah_kotlin.data.local.DatabaseProvider.getDatabase(context)
@@ -233,7 +232,6 @@ fun RecipeDetailScreen(
                     .height(300.dp)
                     .background(Color(220, 220, 220), RoundedCornerShape(12.dp))
             ) {
-                // Фото рецепта, если есть imageUrl
                 if (!imageUrl.isNullOrBlank()) {
                     Image(
                         painter = rememberAsyncImagePainter(model = imageUrl),
@@ -259,11 +257,8 @@ fun RecipeDetailScreen(
                                     val db = com.example.kursah_kotlin.data.local.DatabaseProvider.getDatabase(context)
                                     val recipeDao = db.recipeDao()
 
-                                    // Новый статус избранного
                                     val newFavoriteState = !isFavorite
 
-                                    // Гарантируем, что запись о рецепте есть в БД,
-                                    // если её нет — создаём из текущего RecipeDto.
                                     val existing = recipeDao.getRecipeById(recipeId)
                                     if (existing == null && recipe != null) {
                                         val bundle = recipe!!.toEntities()
@@ -272,12 +267,10 @@ fun RecipeDetailScreen(
                                             recipeDao.upsertRecipes(listOf(entityWithFavorite))
                                         }
                                     } else if (existing != null && existing.isFavorite != newFavoriteState) {
-                                        // Если запись уже есть, можно сразу обновить флаг через upsert
                                         recipeDao.upsertRecipes(
                                             listOf(existing.copy(isFavorite = newFavoriteState))
                                         )
                                     } else {
-                                        // На всякий случай обновляем через явный UPDATE
                                         recipeDao.setFavorite(recipeId, newFavoriteState)
                                     }
 

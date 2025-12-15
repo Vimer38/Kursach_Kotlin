@@ -144,7 +144,6 @@ fun HomeScreen(
     }
 
     LaunchedEffect(currentUser?.uid) {
-        // Загружаем данные пользователя из локальной БД
         currentUser?.let { user ->
             val profile = userRepository.getUserProfile(user.uid)
             firstName = profile?.firstName ?: userName
@@ -174,19 +173,10 @@ fun HomeScreen(
             
             val matchesDifficulty = appliedDifficulties.isEmpty() || appliedDifficulties.contains(recipe.difficulty)
             
-            // For tags, we check if the recipe has ANY of the selected tags (OR logic)
-            // Or ALL? Usually filters are AND. But let's assume if I select "Low Calorie" and "Vegetarian", I want recipes that are BOTH?
-            // Or maybe I want recipes that are EITHER?
-            // Let's go with: if tags are selected, recipe MUST have ALL selected tags.
-            // Wait, typically checkbox filters are OR within a group (e.g. Difficulty: Easy OR Medium)
-            // But for Tags it depends. Let's do OR for now implies "Show me recipes that match any of these traits"
-            // Actually, if I select "Vegetarian" and "Gluten Free", I probably want both.
-            // Let's stick to: matches ALL selected tags.
-            val recipeTags = recipe.diets // We mapped tags to 'diets' field in RecipeCard
+            val recipeTags = recipe.diets
             val matchesTags = appliedTags.isEmpty() || appliedTags.all { it in recipeTags }
 
-            // Nutrient filters
-            val matchesCalories = recipe.calories?.let { 
+            val matchesCalories = recipe.calories?.let {
                 it >= appliedCaloriesRange.start && it <= appliedCaloriesRange.endInclusive 
             } ?: true
             val matchesProtein = recipe.protein?.let { 
@@ -562,7 +552,6 @@ fun RecipeCardItem(
                 .height(180.dp)
                 .background(Color(238, 238, 238), RoundedCornerShape(12.dp))
         ) {
-            // Фоновое изображение рецепта, если есть ссылка
             if (!recipe.imageUrl.isNullOrBlank()) {
                 Image(
                     painter = rememberAsyncImagePainter(model = recipe.imageUrl),
@@ -656,8 +645,7 @@ private suspend fun loadRecipesFromAssets(
                 description = dto.description ?: dto.nutrients?.calories?.let { "$it ккал" } ?: "Рецепт",
                 time = dto.timeMinutes?.let { "$it мин" },
                 category = dto.category,
-                // Используем tags вместо diets
-                diets = dto.tags, 
+                diets = dto.tags,
                 difficulty = dto.difficulty,
                 imageUrl = dto.imageUrl,
                 rating = dto.rating,
@@ -793,7 +781,6 @@ fun FilterBottomSheet(
                 )
             )
             
-            // Time Filter
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 Text(
                     text = "Время приготовления: ${timeRange.start.toInt()} - ${timeRange.endInclusive.toInt()} мин",
@@ -811,7 +798,6 @@ fun FilterBottomSheet(
                 )
             }
 
-            // Difficulty Filter
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 Text(
                     text = "Сложность",
@@ -838,7 +824,6 @@ fun FilterBottomSheet(
                 }
             }
 
-            // Nutrient Filters (NEW)
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 Text(
                     text = "Калории: ${caloriesRange.start.toInt()} - ${caloriesRange.endInclusive.toInt()} ккал",
@@ -909,7 +894,6 @@ fun FilterBottomSheet(
             }
              */
 
-            // Tags Filter
             val tags = listOf(
                 "Низкокалорийное", "Высокобелковое", "Высокое железо", 
                 "Вегетарианское", "Без мяса", "С мясом", "С рыбой", 

@@ -8,7 +8,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object NetworkModule {
 
-    private const val BASE_URL = "https://api.example.com/" // заменить на реальный
+    private const val BASE_URL = "https://api.example.com/"
 
     fun provideOkHttp(): OkHttpClient {
         val logging = HttpLoggingInterceptor().apply {

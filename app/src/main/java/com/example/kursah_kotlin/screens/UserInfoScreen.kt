@@ -71,7 +71,6 @@ fun UserInfoScreen(
     var photoUri by remember { mutableStateOf<Uri?>(null) }
     var nickname by remember { mutableStateOf("") }
 
-    // Лаунчер выбора изображения из галереи
     val imagePickerLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()
     ) { uri: Uri? ->
@@ -79,7 +78,6 @@ fun UserInfoScreen(
         photoName = uri?.lastPathSegment ?: "Фото выбрано"
     }
     
-    // Загружаем существующие данные пользователя
     LaunchedEffect(currentUser?.uid) {
         currentUser?.let { user ->
             val userProfile = userRepository.getUserProfile(user.uid)

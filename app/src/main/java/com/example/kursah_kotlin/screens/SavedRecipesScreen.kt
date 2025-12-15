@@ -69,23 +69,19 @@ fun SavedRecipesScreen(
     var categories by remember { mutableStateOf<List<Pair<String, List<RecipeCard>>>>(emptyList()) }
     var isLoading by remember { mutableStateOf(true) }
 
-    // Загружаем избранные рецепты из базы данных
     androidx.compose.runtime.LaunchedEffect(Unit) {
         kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
             try {
                 val db = com.example.kursah_kotlin.data.local.DatabaseProvider.getDatabase(context)
                 val favoriteEntities = db.recipeDao().getFavorites()
                 
-                // Загружаем полные данные рецептов из JSON
                 val jsonString = context.assets.open("recipes.json").bufferedReader().use { it.readText() }
                 val type = object : com.google.gson.reflect.TypeToken<List<com.example.kursah_kotlin.data.remote.dto.RecipeDto>>() {}.type
                 val allRecipes = com.google.gson.Gson().fromJson<List<com.example.kursah_kotlin.data.remote.dto.RecipeDto>>(jsonString, type) ?: emptyList()
                 
-                // Фильтруем только избранные
                 val favoriteIds = favoriteEntities.map { it.id }.toSet()
                 val favorites = allRecipes.filter { favoriteIds.contains(it.id) }
                 
-                // Группируем по категориям
                 val grouped = favorites
                     .groupBy { it.category ?: "Без категории" }
                     .map { (category, recipes) ->
@@ -103,7 +99,6 @@ fun SavedRecipesScreen(
                 kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.Main) {
                     categories = grouped
                     isLoading = false
-                    // Раскрываем первую категорию
                     if (grouped.isNotEmpty()) {
                         expandedCategories = setOf(grouped.first().first)
                     }

@@ -193,7 +193,6 @@ fun ProfileScreen(
         ) {
             Spacer(modifier = Modifier.height(32.dp))
 
-            // Фотография профиля
             Box(
                 modifier = Modifier
                     .size(120.dp)
@@ -230,7 +229,6 @@ fun ProfileScreen(
             Spacer(modifier = Modifier.height(24.dp))
 
             if (!isEditing) {
-                // Просмотр
                 Text(
                     text = "${firstName} ${lastName}".trim(),
                     style = TextStyle(
@@ -271,7 +269,6 @@ fun ProfileScreen(
 
                 Spacer(modifier = Modifier.height(40.dp))
 
-                // Кнопка выхода из аккаунта
                 Button(
                     onClick = {
                         coroutineScope.launch(Dispatchers.IO) {
@@ -301,7 +298,6 @@ fun ProfileScreen(
 
                 Spacer(modifier = Modifier.height(60.dp))
             } else {
-                // Редактирование
                 EditableField(
                     label = "Имя",
                     value = firstName,

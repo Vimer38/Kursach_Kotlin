@@ -1,5 +1,7 @@
 package com.example.kursah_kotlin.screens
 
+import android.net.Uri
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -42,12 +44,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.rememberAsyncImagePainter
 import com.example.kursah_kotlin.ui.theme.PlayfairDisplayFontFamily
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -90,7 +94,8 @@ fun SavedRecipesScreen(
                                 id = recipe.id ?: "",
                                 title = recipe.title ?: "Без названия",
                                 description = recipe.description ?: "Нет описания",
-                                time = recipe.timeMinutes?.let { "$it мин" }
+                                time = recipe.timeMinutes?.let { "$it мин" },
+                                imageUrl = recipe.imageUrl
                             )
                         }
                     }
@@ -385,6 +390,16 @@ fun SavedRecipeCardItem(
                 .height(140.dp)
                 .background(Color(238, 238, 238), RoundedCornerShape(12.dp))
         ) {
+            if (!recipe.imageUrl.isNullOrBlank()) {
+                Image(
+                    painter = rememberAsyncImagePainter(model = recipe.imageUrl),
+                    contentDescription = recipe.title,
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .clip(RoundedCornerShape(12.dp)),
+                    contentScale = androidx.compose.ui.layout.ContentScale.Crop
+                )
+            }
             Icon(
                 imageVector = Icons.Outlined.Bookmark,
                 contentDescription = "В закладках",

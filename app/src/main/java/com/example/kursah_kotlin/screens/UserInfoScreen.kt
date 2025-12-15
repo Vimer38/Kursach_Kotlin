@@ -1,5 +1,8 @@
 package com.example.kursah_kotlin.screens
 
+import android.net.Uri
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -24,27 +27,27 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.runtime.LaunchedEffect
 import com.example.kursah_kotlin.R
 import com.example.kursah_kotlin.data.local.DatabaseProvider
 import com.example.kursah_kotlin.data.repository.UserRepositoryImpl
-import com.google.firebase.auth.FirebaseAuth
 import com.example.kursah_kotlin.ui.theme.PlayfairDisplayFontFamily
-import kotlinx.coroutines.CoroutineScope
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -59,12 +62,22 @@ fun UserInfoScreen(
     val database = remember { DatabaseProvider.getDatabase(context) }
     val userRepository = remember { UserRepositoryImpl(database) }
     val currentUser = remember { FirebaseAuth.getInstance().currentUser }
+    val coroutineScope = rememberCoroutineScope()
     
     var firstName by remember { mutableStateOf("") }
     var lastName by remember { mutableStateOf("") }
     var age by remember { mutableStateOf("") }
-    var photoName by remember { mutableStateOf("Имя") }
+    var photoName by remember { mutableStateOf("Фото не выбрано") }
+    var photoUri by remember { mutableStateOf<Uri?>(null) }
     var nickname by remember { mutableStateOf("") }
+
+    // Лаунчер выбора изображения из галереи
+    val imagePickerLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.GetContent()
+    ) { uri: Uri? ->
+        photoUri = uri
+        photoName = uri?.lastPathSegment ?: "Фото выбрано"
+    }
     
     // Загружаем существующие данные пользователя
     LaunchedEffect(currentUser?.uid) {
@@ -75,6 +88,10 @@ fun UserInfoScreen(
                 lastName = it.lastName ?: ""
                 age = it.age ?: ""
                 nickname = it.nickname ?: ""
+                if (!it.photoPath.isNullOrBlank()) {
+                    photoUri = Uri.parse(it.photoPath)
+                    photoName = "Фото выбрано"
+                }
             }
         }
     }
@@ -218,21 +235,24 @@ fun UserInfoScreen(
                 PhotoUploadField(
                     photoName = photoName,
                     onPhotoNameChange = { photoName = it },
-                    onUploadClick = { /* TODO: Handle photo upload */ }
+                    onUploadClick = { imagePickerLauncher.launch("image/*") }
                 )
             }
             Button(
                 onClick = {
                     currentUser?.let { user ->
-                        CoroutineScope(Dispatchers.Main).launch {
+                        coroutineScope.launch(Dispatchers.IO) {
                             userRepository.updateUserProfile(
                                 userId = user.uid,
                                 firstName = firstName.takeIf { it.isNotEmpty() },
                                 lastName = lastName.takeIf { it.isNotEmpty() },
                                 age = age.takeIf { it.isNotEmpty() },
-                                nickname = nickname.takeIf { it.isNotEmpty() }
+                                nickname = nickname.takeIf { it.isNotEmpty() },
+                                photoPath = photoUri?.toString()
                             )
-                            onNextClick()
+                            launch(Dispatchers.Main) {
+                                onNextClick()
+                            }
                         }
                     } ?: onNextClick()
                 },

@@ -1,6 +1,8 @@
 package com.example.kursah_kotlin.screens
 
 import android.graphics.Paint
+import android.net.Uri
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -46,33 +48,37 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.rememberAsyncImagePainter
+import com.example.kursah_kotlin.data.local.DatabaseProvider
 import com.example.kursah_kotlin.data.remote.dto.RecipeDto
+import com.example.kursah_kotlin.data.repository.UserRepositoryImpl
 import com.example.kursah_kotlin.ui.theme.PlayfairDisplayFontFamily
+import com.google.firebase.auth.FirebaseAuth
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import androidx.compose.material3.ModalBottomSheet
-import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Slider
-import androidx.compose.material3.RangeSlider
 import androidx.compose.material3.FilterChip
+import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.RangeSlider
 import androidx.compose.material3.SheetState
+import androidx.compose.material3.Slider
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.runtime.mutableStateListOf
-import com.example.kursah_kotlin.data.local.UserPreferences
+import androidx.compose.ui.draw.clip
 import java.io.IOException
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -88,13 +94,12 @@ fun HomeScreen(
 ) {
     val context = LocalContext.current
 
-    val userPreferences = remember { UserPreferences(context) }
+    val database = remember { DatabaseProvider.getDatabase(context) }
+    val userRepository = remember { UserRepositoryImpl(database) }
+    val currentUser = remember { FirebaseAuth.getInstance().currentUser }
 
     var firstName by remember { mutableStateOf<String?>(null) }
-
-    LaunchedEffect(Unit) {
-        firstName = userPreferences.getFirstName()
-    }
+    var photoPath by remember { mutableStateOf<String?>(null) }
 
     var searchText by remember { mutableStateOf("") }
     var selectedCategory by remember { mutableStateOf("Все") }
@@ -138,7 +143,17 @@ fun HomeScreen(
         )
     }
 
-    LaunchedEffect(Unit) {
+    LaunchedEffect(currentUser?.uid) {
+        // Загружаем данные пользователя из локальной БД
+        currentUser?.let { user ->
+            val profile = userRepository.getUserProfile(user.uid)
+            firstName = profile?.firstName ?: userName
+            photoPath = profile?.photoPath
+        } ?: run {
+            firstName = userName
+            photoPath = null
+        }
+
         val (cards, error) = loadRecipesFromAssets(context)
         if (cards.isNotEmpty()) {
             allRecipes = cards
@@ -223,8 +238,19 @@ fun HomeScreen(
                     Box(
                         modifier = Modifier
                             .size(48.dp)
-                            .background(Color(238, 238, 238), CircleShape)
-                    )
+                            .background(Color(238, 238, 238), CircleShape),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        if (!photoPath.isNullOrBlank()) {
+                            Image(
+                                painter = rememberAsyncImagePainter(model = Uri.parse(photoPath!!)),
+                                contentDescription = "Аватар",
+                                modifier = Modifier
+                                    .size(44.dp)
+                                    .clip(CircleShape)
+                            )
+                        }
+                    }
                     Column {
                         Text(
                             text = "Доброе утро",
@@ -536,6 +562,18 @@ fun RecipeCardItem(
                 .height(180.dp)
                 .background(Color(238, 238, 238), RoundedCornerShape(12.dp))
         ) {
+            // Фоновое изображение рецепта, если есть ссылка
+            if (!recipe.imageUrl.isNullOrBlank()) {
+                Image(
+                    painter = rememberAsyncImagePainter(model = recipe.imageUrl),
+                    contentDescription = recipe.title,
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .clip(RoundedCornerShape(12.dp)),
+                    contentScale = androidx.compose.ui.layout.ContentScale.Crop
+                )
+            }
+
             if (recipe.time != null) {
                 Box(
                     modifier = Modifier

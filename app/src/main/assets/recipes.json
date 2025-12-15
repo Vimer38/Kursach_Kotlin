@@ -7,7 +7,7 @@
     "timeMinutes": 25,
     "category": "Горячее",
     "difficulty": "Средне",
-    "imageUrl": "https://images.unsplash.com/photo-1612874742237-6526221588e3?w=800&auto=format&fit=crop",
+    "imageUrl": "https://avatars.mds.yandex.net/i?id=c9b84e0839a8be321f0c5bb68ff3e1a1475fc781-16455012-images-thumbs&n=13",
     "ingredients": [
       {
         "ingredient": {
@@ -101,7 +101,7 @@
     "timeMinutes": 90,
     "category": "Горячее",
     "difficulty": "Средне",
-    "imageUrl": "https://images.unsplash.com/photo-1603105037880-880cd4edfb0d?w=800&auto=format&fit=crop",
+    "imageUrl": "https://avatars.mds.yandex.net/i?id=da36f90e19e5d4665f68147f4e78b9074e0226b9-2286743-images-thumbs&n=13",
     "ingredients": [
       {
         "ingredient": {
@@ -220,117 +220,6 @@
     "isRecipeOfWeek": true
   },
   {
-    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567892",
-    "title": "Стейк из говядины с овощами гриль",
-    "description": "Сочный стейк из говяжьей вырезки с сезонными овощами на гриле.",
-    "rating": 4.8,
-    "timeMinutes": 30,
-    "category": "Горячее",
-    "difficulty": "Средне",
-    "imageUrl": "https://images.unsplash.com/photo-1600891964092-4316c288032e?w=800&auto=format&fit=crop",
-    "ingredients": [
-      {
-        "ingredient": {
-          "id": null,
-          "name": "Говяжья вырезка"
-        },
-        "amount": 400.0,
-        "unit": "г"
-      },
-      {
-        "ingredient": {
-          "id": null,
-          "name": "Кабачок"
-        },
-        "amount": 1.0,
-        "unit": "шт"
-      },
-      {
-        "ingredient": {
-          "id": null,
-          "name": "Баклажан"
-        },
-        "amount": 1.0,
-        "unit": "шт"
-      },
-      {
-        "ingredient": {
-          "id": null,
-          "name": "Перец болгарский"
-        },
-        "amount": 2.0,
-        "unit": "шт"
-      },
-      {
-        "ingredient": {
-          "id": null,
-          "name": "Оливковое масло"
-        },
-        "amount": 4.0,
-        "unit": "ст.л"
-      },
-      {
-        "ingredient": {
-          "id": null,
-          "name": "Розмарин свежий"
-        },
-        "amount": 2.0,
-        "unit": "веточки"
-      },
-      {
-        "ingredient": {
-          "id": null,
-          "name": "Соль морская крупная"
-        },
-        "amount": null,
-        "unit": null
-      },
-      {
-        "ingredient": {
-          "id": null,
-          "name": "Перец черный горошком"
-        },
-        "amount": null,
-        "unit": null
-      }
-    ],
-    "nutrients": {
-      "calories": 380,
-      "protein": 35,
-      "fat": 18,
-      "fatSaturated": 6,
-      "carbohydrates": 15,
-      "sugar": 8,
-      "fiber": 5.5,
-      "sodium": 320,
-      "potassium": 880,
-      "calcium": 45,
-      "iron": 4.5,
-      "vitaminA": 620,
-      "vitaminC": 95,
-      "vitaminD": 0.5,
-      "cholesterol": 95,
-      "omega3": 0.4
-    },
-    "tags": [
-      "С мясом",
-      "Высокобелковое",
-      "Высокое железо",
-      "Безглютеновое"
-    ],
-    "steps": [
-      "Говяжью вырезку промокните бумажным полотенцем, натрите оливковым маслом, солью и перцем.",
-      "Овощи нарежьте крупными дольками, сбрызните оливковым маслом.",
-      "Разогрейте гриль или сковороду-гриль до высокой температуры.",
-      "Обжарьте стейк по 3-4 минуты с каждой стороны для средней прожарки.",
-      "Овощи грильуйте 8-10 минут до мягкости и характерных полосок.",
-      "Дайте стейку отдохнуть 5 минут под фольгой, затем нарежьте поперек волокон.",
-      "Подавайте с овощами, украсив розмарином."
-    ],
-    "isFavorite": false,
-    "isRecipeOfWeek": false
-  },
-  {
     "id": "b2c3d4e5-f6a7-8901-bcde-f23456789012",
     "title": "Борщ",
     "description": "Сытный и ароматный свекольный суп с говядиной, поданный со сметаной.",
@@ -338,7 +227,7 @@
     "timeMinutes": 90,
     "category": "Супы",
     "difficulty": "Средне",
-    "imageUrl": "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=800&auto=format&fit=crop",
+    "imageUrl": "https://avatars.mds.yandex.net/i?id=5cb16c0bb955ec4cbd80f782f7069c5cec45b934-4893181-images-thumbs&n=13",
     "ingredients": [
       {
         "ingredient": {
@@ -463,7 +352,7 @@
     "timeMinutes": 40,
     "category": "Супы",
     "difficulty": "Легко",
-    "imageUrl": "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=800&auto=format&fit=crop",
+    "imageUrl": "https://avatars.mds.yandex.net/i?id=c8a6ebe87f9c6c5f23ed02a09caf697727032914-5717770-images-thumbs&n=13",
     "ingredients": [
       {
         "ingredient": {
@@ -590,7 +479,7 @@
     "timeMinutes": 15,
     "category": "Салат",
     "difficulty": "Легко",
-    "imageUrl": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop",
+    "imageUrl": "https://avatars.mds.yandex.net/i?id=a4a6ea80b1aa6e4831f3d7466d8bc80190b0c84d-4437093-images-thumbs&n=13",
     "ingredients": [
       {
         "ingredient": {
@@ -717,7 +606,7 @@
     "timeMinutes": 10,
     "category": "Салат",
     "difficulty": "Легко",
-    "imageUrl": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop",
+    "imageUrl": "https://avatars.mds.yandex.net/i?id=084c885940de6527be088822c08651c7e132300d-5670683-images-thumbs&n=13",
     "ingredients": [
       {
         "ingredient": {
@@ -836,7 +725,7 @@
     "timeMinutes": 40,
     "category": "Десерты",
     "difficulty": "Сложно",
-    "imageUrl": "https://images.unsplash.com/photo-1560624052-449f5ddf0c31?w=800&auto=format&fit=crop",
+    "imageUrl": "https://avatars.mds.yandex.net/i?id=880f0f566cd043f5836b3240530f97a0f8b71387-13605392-images-thumbs&n=13",
     "ingredients": [
       {
         "ingredient": {
@@ -938,7 +827,7 @@
     "timeMinutes": 30,
     "category": "Десерты",
     "difficulty": "Средне",
-    "imageUrl": "https://images.unsplash.com/photo-1560624052-449f5ddf0c31?w=800&auto=format&fit=crop",
+    "imageUrl": "https://avatars.mds.yandex.net/i?id=37c8058eb16c438d9ee32306463c7a72cf6614c0-5251456-images-thumbs&n=13",
     "ingredients": [
       {
         "ingredient": {
@@ -1040,7 +929,7 @@
     "timeMinutes": 15,
     "category": "Завтраки",
     "difficulty": "Легко",
-    "imageUrl": "https://images.unsplash.com/photo-1593616795666-1d0ec0a66780?w=800&auto=format&fit=crop",
+    "imageUrl": "https://avatars.mds.yandex.net/i?id=fa9293871a4a6253163ce7544d04d148963d507b-4120592-images-thumbs&n=13",
     "ingredients": [
       {
         "ingredient": {
@@ -1160,7 +1049,7 @@
     "timeMinutes": 25,
     "category": "Завтраки",
     "difficulty": "Легко",
-    "imageUrl": "https://images.unsplash.com/photo-1593616795666-1d0ec0a66780?w=800&auto=format&fit=crop",
+    "imageUrl": "https://avatars.mds.yandex.net/i?id=61c29664eb612fff5c73b9c5981b96beb6256ccd-5865991-images-thumbs&n=13",
     "ingredients": [
       {
         "ingredient": {
@@ -1278,7 +1167,7 @@
     "timeMinutes": 120,
     "category": "Обеды",
     "difficulty": "Сложно",
-    "imageUrl": "https://images.unsplash.com/photo-1585937421612-70ca003675ed?w=800&auto=format&fit=crop",
+    "imageUrl": "https://avatars.mds.yandex.net/i?id=e5a1f05e301302dc495c2e3b9f6b1e4612ababee-5245347-images-thumbs&n=13",
     "ingredients": [
       {
         "ingredient": {
@@ -1399,7 +1288,7 @@
     "timeMinutes": 50,
     "category": "Обеды",
     "difficulty": "Средне",
-    "imageUrl": "https://images.unsplash.com/photo-1585937421612-70ca003675ed?w=800&auto=format&fit=crop",
+    "imageUrl": "https://avatars.mds.yandex.net/i?id=332f0fbf71d3dbb57e68c3e5f9f450e4ab2174a8-4306866-images-thumbs&n=13",
     "ingredients": [
       {
         "ingredient": {
@@ -1532,7 +1421,7 @@
     "timeMinutes": 25,
     "category": "Ужины",
     "difficulty": "Средне",
-    "imageUrl": "https://images.unsplash.com/photo-1467003909585-2f8a72700288?w=800&auto=format&fit=crop",
+    "imageUrl": "https://avatars.mds.yandex.net/i?id=2c898477697594318260d5e29537934e9b0a162b-4591504-images-thumbs&n=13",
     "ingredients": [
       {
         "ingredient": {
@@ -1650,7 +1539,7 @@
     "timeMinutes": 35,
     "category": "Ужины",
     "difficulty": "Легко",
-    "imageUrl": "https://images.unsplash.com/photo-1467003909585-2f8a72700288?w=800&auto=format&fit=crop",
+    "imageUrl": "https://avatars.mds.yandex.net/i?id=27604d5ea083c328f80566b9d4ede0bcdc574408-5661188-images-thumbs&n=13",
     "ingredients": [
       {
         "ingredient": {
@@ -1779,96 +1668,6 @@
     "isRecipeOfWeek": false
   },
   {
-    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
-    "title": "Паста Карбонара",
-    "description": "Классическая итальянская паста с хрустящим беконом и сливочным сырно-яичным соусом.",
-    "rating": 4.7,
-    "timeMinutes": 25,
-    "category": "Горячее",
-    "difficulty": "Средне",
-    "imageUrl": "https://images.unsplash.com/photo-1612874742237-6526221588e3?w=800&auto=format&fit=crop",
-    "ingredients": [
-      {
-        "ingredient": {
-          "id": null,
-          "name": "Спагетти"
-        },
-        "amount": 400.0,
-        "unit": "г"
-      },
-      {
-        "ingredient": {
-          "id": null,
-          "name": "Бекон или гуанчиале"
-        },
-        "amount": 200.0,
-        "unit": "г"
-      },
-      {
-        "ingredient": {
-          "id": null,
-          "name": "Яйца куриные"
-        },
-        "amount": 4.0,
-        "unit": "шт"
-      },
-      {
-        "ingredient": {
-          "id": null,
-          "name": "Сыр Пекорино Романо"
-        },
-        "amount": 100.0,
-        "unit": "г"
-      },
-      {
-        "ingredient": {
-          "id": null,
-          "name": "Черный перец свежемолотый"
-        },
-        "amount": null,
-        "unit": null
-      },
-      {
-        "ingredient": {
-          "id": null,
-          "name": "Соль"
-        },
-        "amount": null,
-        "unit": null
-      }
-    ],
-    "nutrients": {
-      "calories": 580,
-      "protein": 24,
-      "fat": 32,
-      "fatSaturated": 14,
-      "carbohydrates": 48,
-      "sugar": 2.5,
-      "fiber": 2.8,
-      "sodium": 980,
-      "potassium": 420,
-      "calcium": 180,
-      "iron": 2.8,
-      "vitaminA": 220,
-      "vitaminC": 1.5,
-      "vitaminD": 1.8,
-      "cholesterol": 210,
-      "omega3": 0.2
-    },
-    "tags": ["С мясом", "Высокобелковое", "Высокое железо"],
-    "steps": [
-      "Нарежьте бекон небольшими кусочками и обжарьте на сковороде до хрустящей корочки.",
-      "Отварите спагетти в подсоленной воде согласно инструкции на упаковке, сохраните 1 стакан воды от варки.",
-      "В миске взбейте яйца, добавьте тертый сыр и обильно поперчите.",
-      "Слейте воду с пасты, оставив немного жидкости, и быстро смешайте с беконом.",
-      "Снимите сковороду с огня, добавьте яично-сырную смесь, интенсивно помешивая.",
-      "Добавляйте воду от варки пасты по необходимости для получения кремовой консистенции.",
-      "Подавайте немедленно, посыпав дополнительным сыром и перцем."
-    ],
-    "isFavorite": false,
-    "isRecipeOfWeek": false
-  },
-  {
     "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567891",
     "title": "Жаркое из свинины с картофелем",
     "description": "Ароматное жаркое из нежной свинины с картофелем и овощами в горшочке.",
@@ -1876,7 +1675,7 @@
     "timeMinutes": 90,
     "category": "Горячее",
     "difficulty": "Средне",
-    "imageUrl": "https://images.unsplash.com/photo-1603105037880-880cd4edfb0d?w=800&auto=format&fit=crop",
+    "imageUrl": "https://www.огнибаку.рф/upload/iblock/70c/70c830b455f51533e00ef9949bc61945.jpg",
     "ingredients": [
       {
         "ingredient": {
@@ -1998,7 +1797,7 @@
     "timeMinutes": 30,
     "category": "Горячее",
     "difficulty": "Средне",
-    "imageUrl": "https://images.unsplash.com/photo-1600891964092-4316c288032e?w=800&auto=format&fit=crop",
+    "imageUrl": "https://food.pibig.info/uploads/posts/2023-09/1693931596_food-pibig-info-p-restorannie-blyuda-iz-svinini-instagram-29.jpg",
     "ingredients": [
       {
         "ingredient": {
@@ -2104,7 +1903,7 @@
     "timeMinutes": 50,
     "category": "Горячее",
     "difficulty": "Средне",
-    "imageUrl": "https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?w=800&auto=format&fit=crop",
+    "imageUrl": "https://avatars.mds.yandex.net/i?id=a5cdc1bdde617335124ec8b6d4628be2dbd36854-5553356-images-thumbs&n=13",
     "ingredients": [
       {
         "ingredient": {
@@ -2225,7 +2024,7 @@
     "timeMinutes": 75,
     "category": "Горячее",
     "difficulty": "Сложно",
-    "imageUrl": "https://images.unsplash.com/photo-1619895092538-128341789043?w=800&auto=format&fit=crop",
+    "imageUrl": "https://avatars.mds.yandex.net/i?id=8fb1faeb939ae9c0b5ab8a873f01c69557e9039d-4570234-images-thumbs&n=13",
     "ingredients": [
       {
         "ingredient": {
@@ -2362,7 +2161,7 @@
     "timeMinutes": 60,
     "category": "Горячее",
     "difficulty": "Средне",
-    "imageUrl": "https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=800&auto=format&fit=crop",
+    "imageUrl": "https://avatars.mds.yandex.net/i?id=3647b13d28486ce613f4e26cdc599384775e0d23-4571539-images-thumbs&n=13",
     "ingredients": [
       {
         "ingredient": {
@@ -2492,7 +2291,7 @@
     "timeMinutes": 40,
     "category": "Горячее",
     "difficulty": "Легко",
-    "imageUrl": "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=800&auto=format&fit=crop",
+    "imageUrl": "https://avatars.mds.yandex.net/i?id=b273dc3433e225899ddd6013c22f13c81a047e18-13308934-images-thumbs&n=13",
     "ingredients": [
       {
         "ingredient": {
@@ -2622,7 +2421,7 @@
     "timeMinutes": 60,
     "category": "Горячее",
     "difficulty": "Сложно",
-    "imageUrl": "https://images.unsplash.com/photo-1600891964092-4316c288032e?w=800&auto=format&fit=crop",
+    "imageUrl": "https://avatars.mds.yandex.net/i?id=bf2c6c9356eceea911c3bb6e64aabffebe41c0dd-5220849-images-thumbs&n=13",
     "ingredients": [
       {
         "ingredient": {
@@ -2751,7 +2550,7 @@
     "timeMinutes": 70,
     "category": "Горячее",
     "difficulty": "Средне",
-    "imageUrl": "https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=800&auto=format&fit=crop",
+    "imageUrl": "https://avatars.mds.yandex.net/i?id=984e9ff81fe148b6f0ef90ad90630dc6011b51ae-5476635-images-thumbs&n=13",
     "ingredients": [
       {
         "ingredient": {
@@ -2882,7 +2681,7 @@
     "timeMinutes": 60,
     "category": "Горячее",
     "difficulty": "Легко",
-    "imageUrl": "https://images.unsplash.com/photo-1600891964092-4316c288032e?w=800&auto=format&fit=crop",
+    "imageUrl": "https://avatars.mds.yandex.net/i?id=0c8d575b04fb80b96df9454f7967f3191743df5e-4472083-images-thumbs&n=13",
     "ingredients": [
       {
         "ingredient": {
@@ -2997,7 +2796,7 @@
     "timeMinutes": 25,
     "category": "Горячее",
     "difficulty": "Легко",
-    "imageUrl": "https://images.unsplash.com/photo-1467003909585-2f8a72700288?w=800&auto=format&fit=crop",
+    "imageUrl": "https://avatars.mds.yandex.net/i?id=5b2fe01d2d2ce4916ba164ce4bcbb3dfde80e7de-3727959-images-thumbs&n=13",
     "ingredients": [
       {
         "ingredient": {
@@ -3099,259 +2898,6 @@
       "Обжарьте с обеих сторон до золотисто-коричневого цвета (около 4-5 минут с каждой стороны).",
       "Готовую рыбу выложите на бумажные полотенца, чтобы удалить излишки масла.",
       "Подавайте горячей с дольками лимона и свежим укропом."
-    ],
-    "isFavorite": false,
-    "isRecipeOfWeek": false
-  },
-  {
-    "id": "b2c3d4e5-f6a7-8901-bcde-f23456789012",
-    "title": "Борщ украинский",
-    "description": "Сытный и ароматный свекольный суп с говядиной, поданный со сметаной.",
-    "rating": 4.8,
-    "timeMinutes": 90,
-    "category": "Супы",
-    "difficulty": "Средне",
-    "imageUrl": "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=800&auto=format&fit=crop",
-    "ingredients": [
-      {
-        "ingredient": {
-          "id": null,
-          "name": "Говядина на кости"
-        },
-        "amount": 500.0,
-        "unit": "г"
-      },
-      {
-        "ingredient": {
-          "id": null,
-          "name": "Свекла"
-        },
-        "amount": 300.0,
-        "unit": "г"
-      },
-      {
-        "ingredient": {
-          "id": null,
-          "name": "Капуста белокочанная"
-        },
-        "amount": 200.0,
-        "unit": "г"
-      },
-      {
-        "ingredient": {
-          "id": null,
-          "name": "Картофель"
-        },
-        "amount": 300.0,
-        "unit": "г"
-      },
-      {
-        "ingredient": {
-          "id": null,
-          "name": "Лук репчатый"
-        },
-        "amount": 100.0,
-        "unit": "г"
-      },
-      {
-        "ingredient": {
-          "id": null,
-          "name": "Морковь"
-        },
-        "amount": 100.0,
-        "unit": "г"
-      },
-      {
-        "ingredient": {
-          "id": null,
-          "name": "Томатная паста"
-        },
-        "amount": 2.0,
-        "unit": "ст.л"
-      },
-      {
-        "ingredient": {
-          "id": null,
-          "name": "Уксус столовый"
-        },
-        "amount": 1.0,
-        "unit": "ст.л"
-      },
-      {
-        "ingredient": {
-          "id": null,
-          "name": "Сметана"
-        },
-        "amount": null,
-        "unit": null
-      },
-      {
-        "ingredient": {
-          "id": null,
-          "name": "Зелень (укроп, петрушка)"
-        },
-        "amount": null,
-        "unit": null
-      }
-    ],
-    "nutrients": {
-      "calories": 320,
-      "protein": 22,
-      "fat": 12,
-      "fatSaturated": 4,
-      "carbohydrates": 35,
-      "sugar": 8,
-      "fiber": 6,
-      "sodium": 850,
-      "potassium": 780,
-      "calcium": 70,
-      "iron": 3.5,
-      "vitaminA": 650,
-      "vitaminC": 30,
-      "vitaminD": 0.2,
-      "cholesterol": 60,
-      "omega3": 0.1
-    },
-    "tags": ["С мясом", "Высокое железо"],
-    "steps": [
-      "Говядину залейте 3 литрами воды, доведите до кипения, снимите пену и варите 1,5 часа на медленном огне.",
-      "Натрите свеклу и морковь на крупной терке, лук мелко нарежьте.",
-      "Свеклу тушите с добавлением уксуса и томатной пасты 15 минут для сохранения цвета.",
-      "Добавьте в бульон нарезанный картофель и капусту, варите 15 минут.",
-      "Обжарьте лук и морковь на растительном масле до мягкости.",
-      "Добавьте тушеную свеклу и обжаренные овощи в бульон, варите еще 10 минут.",
-      "Перед подачей дайте борщу настояться 20-30 минут, подавайте со сметаной и зеленью."
-    ],
-    "isFavorite": false,
-    "isRecipeOfWeek": false
-  },
-  {
-    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567898",
-    "title": "Фаршированные перцы",
-    "description": "Болгарские перцы, начиненные ароматным мясным фаршем с рисом, запеченные в томатном соусе.",
-    "rating": 4.6,
-    "timeMinutes": 70,
-    "category": "Горячее",
-    "difficulty": "Средне",
-    "imageUrl": "https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=800&auto=format&fit=crop",
-    "ingredients": [
-      {
-        "ingredient": {
-          "id": null,
-          "name": "Перец болгарский (крупный)"
-        },
-        "amount": 6.0,
-        "unit": "шт"
-      },
-      {
-        "ingredient": {
-          "id": null,
-          "name": "Смешанный фарш (говядина+свинина)"
-        },
-        "amount": 600.0,
-        "unit": "г"
-      },
-      {
-        "ingredient": {
-          "id": null,
-          "name": "Рис отварной"
-        },
-        "amount": 150.0,
-        "unit": "г"
-      },
-      {
-        "ingredient": {
-          "id": null,
-          "name": "Лук репчатый"
-        },
-        "amount": 2.0,
-        "unit": "шт"
-      },
-      {
-        "ingredient": {
-          "id": null,
-          "name": "Морковь"
-        },
-        "amount": 1.0,
-        "unit": "шт"
-      },
-      {
-        "ingredient": {
-          "id": null,
-          "name": "Томатная паста"
-        },
-        "amount": 3.0,
-        "unit": "ст.л"
-      },
-      {
-        "ingredient": {
-          "id": null,
-          "name": "Сметана"
-        },
-        "amount": 200.0,
-        "unit": "г"
-      },
-      {
-        "ingredient": {
-          "id": null,
-          "name": "Растительное масло"
-        },
-        "amount": 3.0,
-        "unit": "ст.л"
-      },
-      {
-        "ingredient": {
-          "id": null,
-          "name": "Соль"
-        },
-        "amount": null,
-        "unit": null
-      },
-      {
-        "ingredient": {
-          "id": null,
-          "name": "Перец черный молотый"
-        },
-        "amount": null,
-        "unit": null
-      },
-      {
-        "ingredient": {
-          "id": null,
-          "name": "Зелень укропа"
-        },
-        "amount": 20.0,
-        "unit": "г"
-      }
-    ],
-    "nutrients": {
-      "calories": 280,
-      "protein": 20,
-      "fat": 15,
-      "fatSaturated": 5,
-      "carbohydrates": 18,
-      "sugar": 7,
-      "fiber": 3.5,
-      "sodium": 500,
-      "potassium": 520,
-      "calcium": 80,
-      "iron": 2.8,
-      "vitaminA": 1050,
-      "vitaminC": 180,
-      "vitaminD": 0.3,
-      "cholesterol": 70,
-      "omega3": 0.3
-    },
-    "tags": ["С мясом", "Высокобелковое", "Высокое железо"],
-    "steps": [
-      "У перцев срежьте верхушки, удалите семена и перегородки.",
-      "Лук и морковь мелко нарежьте, обжарьте на растительном масле до мягкости.",
-      "Смешайте фарш, отварной рис, обжаренные овощи, соль и перец.",
-      "Нафаршируйте перцы полученной начинкой.",
-      "Для соуса смешайте томатную пасту, сметану и 400 мл воды.",
-      "Уложите перцы в глубокую форму, залейте соусом.",
-      "Накройте крышкой или фольгой и запекайте при 180°C 50 минут.",
-      "Подавайте горячими, посыпав свежей зеленью."
     ],
     "isFavorite": false,
     "isRecipeOfWeek": false
@@ -3466,259 +3012,6 @@
       "Обжарьте с обеих сторон до золотисто-коричневого цвета (около 4-5 минут с каждой стороны).",
       "Готовую рыбу выложите на бумажные полотенца, чтобы удалить излишки масла.",
       "Подавайте горячей с дольками лимона и свежим укропом."
-    ],
-    "isFavorite": false,
-    "isRecipeOfWeek": false
-  },
-  {
-    "id": "b2c3d4e5-f6a7-8901-bcde-f23456789012",
-    "title": "Борщ украинский",
-    "description": "Сытный и ароматный свекольный суп с говядиной, поданный со сметаной.",
-    "rating": 4.8,
-    "timeMinutes": 90,
-    "category": "Супы",
-    "difficulty": "Средне",
-    "imageUrl": "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=800&auto=format&fit=crop",
-    "ingredients": [
-      {
-        "ingredient": {
-          "id": null,
-          "name": "Говядина на кости"
-        },
-        "amount": 500.0,
-        "unit": "г"
-      },
-      {
-        "ingredient": {
-          "id": null,
-          "name": "Свекла"
-        },
-        "amount": 300.0,
-        "unit": "г"
-      },
-      {
-        "ingredient": {
-          "id": null,
-          "name": "Капуста белокочанная"
-        },
-        "amount": 200.0,
-        "unit": "г"
-      },
-      {
-        "ingredient": {
-          "id": null,
-          "name": "Картофель"
-        },
-        "amount": 300.0,
-        "unit": "г"
-      },
-      {
-        "ingredient": {
-          "id": null,
-          "name": "Лук репчатый"
-        },
-        "amount": 100.0,
-        "unit": "г"
-      },
-      {
-        "ingredient": {
-          "id": null,
-          "name": "Морковь"
-        },
-        "amount": 100.0,
-        "unit": "г"
-      },
-      {
-        "ingredient": {
-          "id": null,
-          "name": "Томатная паста"
-        },
-        "amount": 2.0,
-        "unit": "ст.л"
-      },
-      {
-        "ingredient": {
-          "id": null,
-          "name": "Уксус столовый"
-        },
-        "amount": 1.0,
-        "unit": "ст.л"
-      },
-      {
-        "ingredient": {
-          "id": null,
-          "name": "Сметана"
-        },
-        "amount": null,
-        "unit": null
-      },
-      {
-        "ingredient": {
-          "id": null,
-          "name": "Зелень (укроп, петрушка)"
-        },
-        "amount": null,
-        "unit": null
-      }
-    ],
-    "nutrients": {
-      "calories": 320,
-      "protein": 22,
-      "fat": 12,
-      "fatSaturated": 4,
-      "carbohydrates": 35,
-      "sugar": 8,
-      "fiber": 6,
-      "sodium": 850,
-      "potassium": 780,
-      "calcium": 70,
-      "iron": 3.5,
-      "vitaminA": 650,
-      "vitaminC": 30,
-      "vitaminD": 0.2,
-      "cholesterol": 60,
-      "omega3": 0.1
-    },
-    "tags": ["С мясом", "Высокое железо"],
-    "steps": [
-      "Говядину залейте 3 литрами воды, доведите до кипения, снимите пену и варите 1,5 часа на медленном огне.",
-      "Натрите свеклу и морковь на крупной терке, лук мелко нарежьте.",
-      "Свеклу тушите с добавлением уксуса и томатной пасты 15 минут для сохранения цвета.",
-      "Добавьте в бульон нарезанный картофель и капусту, варите 15 минут.",
-      "Обжарьте лук и морковь на растительном масле до мягкости.",
-      "Добавьте тушеную свеклу и обжаренные овощи в бульон, варите еще 10 минут.",
-      "Перед подачей дайте борщу настояться 20-30 минут, подавайте со сметаной и зеленью."
-    ],
-    "isFavorite": false,
-    "isRecipeOfWeek": false
-  },
-  {
-    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567898",
-    "title": "Фаршированные перцы",
-    "description": "Болгарские перцы, начиненные ароматным мясным фаршем с рисом, запеченные в томатном соусе.",
-    "rating": 4.6,
-    "timeMinutes": 70,
-    "category": "Горячее",
-    "difficulty": "Средне",
-    "imageUrl": "https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=800&auto=format&fit=crop",
-    "ingredients": [
-      {
-        "ingredient": {
-          "id": null,
-          "name": "Перец болгарский (крупный)"
-        },
-        "amount": 6.0,
-        "unit": "шт"
-      },
-      {
-        "ingredient": {
-          "id": null,
-          "name": "Смешанный фарш (говядина+свинина)"
-        },
-        "amount": 600.0,
-        "unit": "г"
-      },
-      {
-        "ingredient": {
-          "id": null,
-          "name": "Рис отварной"
-        },
-        "amount": 150.0,
-        "unit": "г"
-      },
-      {
-        "ingredient": {
-          "id": null,
-          "name": "Лук репчатый"
-        },
-        "amount": 2.0,
-        "unit": "шт"
-      },
-      {
-        "ingredient": {
-          "id": null,
-          "name": "Морковь"
-        },
-        "amount": 1.0,
-        "unit": "шт"
-      },
-      {
-        "ingredient": {
-          "id": null,
-          "name": "Томатная паста"
-        },
-        "amount": 3.0,
-        "unit": "ст.л"
-      },
-      {
-        "ingredient": {
-          "id": null,
-          "name": "Сметана"
-        },
-        "amount": 200.0,
-        "unit": "г"
-      },
-      {
-        "ingredient": {
-          "id": null,
-          "name": "Растительное масло"
-        },
-        "amount": 3.0,
-        "unit": "ст.л"
-      },
-      {
-        "ingredient": {
-          "id": null,
-          "name": "Соль"
-        },
-        "amount": null,
-        "unit": null
-      },
-      {
-        "ingredient": {
-          "id": null,
-          "name": "Перец черный молотый"
-        },
-        "amount": null,
-        "unit": null
-      },
-      {
-        "ingredient": {
-          "id": null,
-          "name": "Зелень укропа"
-        },
-        "amount": 20.0,
-        "unit": "г"
-      }
-    ],
-    "nutrients": {
-      "calories": 280,
-      "protein": 20,
-      "fat": 15,
-      "fatSaturated": 5,
-      "carbohydrates": 18,
-      "sugar": 7,
-      "fiber": 3.5,
-      "sodium": 500,
-      "potassium": 520,
-      "calcium": 80,
-      "iron": 2.8,
-      "vitaminA": 1050,
-      "vitaminC": 180,
-      "vitaminD": 0.3,
-      "cholesterol": 70,
-      "omega3": 0.3
-    },
-    "tags": ["С мясом", "Высокобелковое", "Высокое железо"],
-    "steps": [
-      "У перцев срежьте верхушки, удалите семена и перегородки.",
-      "Лук и морковь мелко нарежьте, обжарьте на растительном масле до мягкости.",
-      "Смешайте фарш, отварной рис, обжаренные овощи, соль и перец.",
-      "Нафаршируйте перцы полученной начинкой.",
-      "Для соуса смешайте томатную пасту, сметану и 400 мл воды.",
-      "Уложите перцы в глубокую форму, залейте соусом.",
-      "Накройте крышкой или фольгой и запекайте при 180°C 50 минут.",
-      "Подавайте горячими, посыпав свежей зеленью."
     ],
     "isFavorite": false,
     "isRecipeOfWeek": false

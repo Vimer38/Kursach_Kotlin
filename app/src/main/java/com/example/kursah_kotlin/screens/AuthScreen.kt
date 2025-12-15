@@ -55,6 +55,7 @@ import com.example.kursah_kotlin.data.local.DatabaseProvider
 import com.example.kursah_kotlin.data.repository.UserRepositoryImpl
 import com.example.kursah_kotlin.ui.theme.ItalianaFontFamily
 import com.example.kursah_kotlin.ui.theme.PlayfairDisplayFontFamily
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -64,11 +65,15 @@ import java.util.regex.Pattern
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Preview
 @Composable
-fun AuthScreen(onContinue: () -> Unit = {}) {
+fun AuthScreen(
+    onContinue: () -> Unit = {},
+    onAlreadyAuthenticated: () -> Unit = {}
+) {
     val context = LocalContext.current
     val database = remember { DatabaseProvider.getDatabase(context) }
     val userRepository = remember { UserRepositoryImpl(database) }
     val focusManager = LocalFocusManager.current
+    val firebaseAuth = remember { FirebaseAuth.getInstance() }
 
     var loginText by remember { mutableStateOf("") }
     var passwordText by remember { mutableStateOf("") }
@@ -83,6 +88,14 @@ fun AuthScreen(onContinue: () -> Unit = {}) {
     var confirmPasswordError by remember { mutableStateOf<String?>(null) }
 
     val isRegisterMode = selectedOption == "Зарегистрироваться"
+
+    // Если пользователь уже авторизован, сразу переходим дальше (на HomeScreen)
+    LaunchedEffect(Unit) {
+        if (firebaseAuth.currentUser != null) {
+            onAlreadyAuthenticated()
+            return@LaunchedEffect
+        }
+    }
 
     // Функции валидации
     fun validateEmail(email: String): String? {

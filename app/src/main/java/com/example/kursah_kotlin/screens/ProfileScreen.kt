@@ -401,6 +401,7 @@ private fun EditableField(
         )
         TextField(
             value = value,
+            modifier = Modifier.fillMaxWidth(),
             onValueChange = onValueChange,
             enabled = enabled,
             singleLine = true,

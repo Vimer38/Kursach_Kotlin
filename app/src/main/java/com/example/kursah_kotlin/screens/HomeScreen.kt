@@ -53,6 +53,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.LineHeightStyle
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -77,6 +78,8 @@ import androidx.compose.material3.SheetState
 import androidx.compose.material3.Slider
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.width
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.ui.draw.clip
 import java.io.IOException
@@ -85,7 +88,7 @@ import java.io.IOException
 @Preview
 @Composable
 fun HomeScreen(
-    userName: String = "Имя",
+    userName: String = "Пользователь",
     onSearchClick: () -> Unit = {},
     onCategoryClick: (String) -> Unit = {},
     onRecipeClick: (String) -> Unit = {},
@@ -215,7 +218,7 @@ fun HomeScreen(
                 .fillMaxSize()
                 .background(Color.White)
                 .padding(innerPadding)
-                .padding(horizontal = 24.dp),
+                .padding(start = 24.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             item {
@@ -443,7 +446,7 @@ fun SearchBar(
                 onSearchClick()
             }
         ),
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier.fillMaxWidth().padding(end = 12.dp),
         textStyle = TextStyle(
             fontFamily = PlayfairDisplayFontFamily,
             fontSize = 16.sp
@@ -509,7 +512,7 @@ fun SectionHeader(
         )
         Text(
             text = if (isExpanded) "Свернуть" else "Смотреть все",
-            modifier = Modifier.clickable { onSeeAllClick() },
+            modifier = Modifier.padding(end = 12.dp).clickable{ onSeeAllClick() },
             style = TextStyle(
                 fontFamily = PlayfairDisplayFontFamily,
                 fontSize = 14.sp,
@@ -543,13 +546,13 @@ fun RecipeCardItem(
 ) {
     Column(
         modifier = Modifier
-            .size(width = 200.dp, height = 230.dp)
+            .width(150.dp)
             .clickable { onClick() }
     ) {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(180.dp)
+                .height(150.dp)
                 .background(Color(238, 238, 238), RoundedCornerShape(12.dp))
         ) {
             if (!recipe.imageUrl.isNullOrBlank()) {
@@ -559,14 +562,14 @@ fun RecipeCardItem(
                     modifier = Modifier
                         .fillMaxSize()
                         .clip(RoundedCornerShape(12.dp)),
-                    contentScale = androidx.compose.ui.layout.ContentScale.Crop
+                    contentScale = ContentScale.Crop
                 )
             }
 
-            if (recipe.time != null) {
+            recipe.time?.let { timeText ->
                 Box(
                     modifier = Modifier
-                        .padding(12.dp)
+                        .padding(8.dp)
                         .background(
                             Color.White.copy(alpha = 0.9f),
                             RoundedCornerShape(8.dp)
@@ -574,7 +577,7 @@ fun RecipeCardItem(
                         .padding(horizontal = 8.dp, vertical = 4.dp)
                 ) {
                     Text(
-                        text = recipe.time,
+                        text = timeText,
                         style = TextStyle(
                             fontFamily = PlayfairDisplayFontFamily,
                             fontSize = 12.sp,
@@ -584,37 +587,49 @@ fun RecipeCardItem(
                 }
             }
         }
+
         Spacer(modifier = Modifier.height(8.dp))
+
         Text(
             text = recipe.title,
-            style = TextStyle(
-                fontFamily = PlayfairDisplayFontFamily,
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Normal,
-                color = Color.Black
-            )
-        )
-        Spacer(modifier = Modifier.height(4.dp))
-        Text(
-            text = recipe.description,
+            maxLines = 2,
+            overflow = TextOverflow.Ellipsis,
             style = TextStyle(
                 fontFamily = PlayfairDisplayFontFamily,
                 fontSize = 14.sp,
+                fontWeight = FontWeight.Medium,
                 color = Color.Black
             )
         )
+
+        Spacer(modifier = Modifier.height(4.dp))
+
+        Text(
+            text = recipe.description,
+            maxLines = 2,
+            overflow = TextOverflow.Ellipsis,
+            style = TextStyle(
+                fontFamily = PlayfairDisplayFontFamily,
+                fontSize = 12.sp,
+                color = Color.Gray
+            )
+        )
+
         val meta = listOfNotNull(
             recipe.category,
             recipe.difficulty,
             recipe.diets.takeIf { it.isNotEmpty() }?.joinToString(", ")
         ).joinToString(" • ")
+
         if (meta.isNotEmpty()) {
             Spacer(modifier = Modifier.height(4.dp))
             Text(
                 text = meta,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
                 style = TextStyle(
                     fontFamily = PlayfairDisplayFontFamily,
-                    fontSize = 12.sp,
+                    fontSize = 11.sp,
                     color = Color.Gray
                 )
             )

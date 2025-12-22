@@ -108,7 +108,7 @@ fun WelcomeScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(Color.White)
+                .background(Color(214,208,198,100))
                 .padding(innerPadding)
                 .padding(horizontal = 24.dp),
             horizontalAlignment = Alignment.Start
@@ -136,11 +136,11 @@ fun WelcomeScreen(
                 modifier = Modifier
                     .border(
                         width = if (selectedButton.value == "Похудеть") 1.dp else 0.dp,
-                        color = if (selectedButton.value == "Похудеть") Color.Black else Color.Transparent,
+                        color = if (selectedButton.value == "Похудеть") Color(190,126,1,100) else Color.Transparent,
                         shape = RoundedCornerShape(50.dp)
                     ),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = if (selectedButton.value == "Похудеть") Color.White else Color(238, 238, 238)
+                    containerColor = if (selectedButton.value == "Похудеть") Color.White else Color(174,187,166,100)
                 ),
                 shape = RoundedCornerShape(50.dp)
             ) {
@@ -162,11 +162,11 @@ fun WelcomeScreen(
                 modifier = Modifier
                     .border(
                         width = if (selectedButton.value == "Набор массы") 1.dp else 0.dp,
-                        color = if (selectedButton.value == "Набор массы") Color.Black else Color.Transparent,
+                        color = if (selectedButton.value == "Набор массы") Color(190,126,1,100) else Color.Transparent,
                         shape = RoundedCornerShape(50.dp)
                     ),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = if (selectedButton.value == "Набор массы") Color.White else Color(238, 238, 238)
+                    containerColor = if (selectedButton.value == "Набор массы") Color.White else Color(174,187,166,100)
                 ),
                 shape = RoundedCornerShape(50.dp)
             ) {
@@ -188,11 +188,11 @@ fun WelcomeScreen(
                 modifier = Modifier
                     .border(
                         width = if (selectedButton.value == "Следить за питанием") 1.dp else 0.dp,
-                        color = if (selectedButton.value == "Следить за питанием") Color.Black else Color.Transparent,
+                        color = if (selectedButton.value == "Следить за питанием") Color(190,126,1,100) else Color.Transparent,
                         shape = RoundedCornerShape(50.dp)
                     ),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = if (selectedButton.value == "Следить за питанием") Color.White else Color(238, 238, 238)
+                    containerColor = if (selectedButton.value == "Следить за питанием") Color.White else Color(174,187,166,100)
                 ),
                 shape = RoundedCornerShape(50.dp)
             ) {
@@ -214,11 +214,11 @@ fun WelcomeScreen(
                 modifier = Modifier
                     .border(
                         width = if (selectedButton.value == "Поиск новых рецептов") 1.dp else 0.dp,
-                        color = if (selectedButton.value == "Поиск новых рецептов") Color.Black else Color.Transparent,
+                        color = if (selectedButton.value == "Поиск новых рецептов") Color(190,126,1,100) else Color.Transparent,
                         shape = RoundedCornerShape(50.dp)
                     ),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = if (selectedButton.value == "Поиск новых рецептов") Color.White else Color(238, 238, 238)
+                    containerColor = if (selectedButton.value == "Поиск новых рецептов") Color.White else Color(174,187,166,100)
                 ),
                 shape = RoundedCornerShape(50.dp)
             ) {
@@ -240,11 +240,11 @@ fun WelcomeScreen(
                 modifier = Modifier
                     .border(
                         width = if (selectedButton.value == "Для себя") 1.dp else 0.dp,
-                        color = if (selectedButton.value == "Для себя") Color.Black else Color.Transparent,
+                        color = if (selectedButton.value == "Для себя") Color(190,126,1,100) else Color.Transparent,
                         shape = RoundedCornerShape(50.dp)
                     ),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = if (selectedButton.value == "Для себя") Color.White else Color(238, 238, 238),
+                    containerColor = if (selectedButton.value == "Для себя") Color.White else Color(174,187,166,100),
                 ),
                 shape = RoundedCornerShape(50.dp)
             ) {
@@ -266,7 +266,7 @@ fun WelcomeScreen(
                         .padding(bottom = 120.dp)
                         .size(width = 100.dp, height = 55.dp),
                     shape = RoundedCornerShape(13.dp),
-                    colors = ButtonDefaults.buttonColors(containerColor = Color(193, 190, 190))
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(132,138,128,100))
                 ) {
                     Text(
                         "Дальше",

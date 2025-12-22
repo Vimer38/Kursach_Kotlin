@@ -185,7 +185,7 @@ fun HomeScreen(
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
-                .background(Color.White)
+                .background(Color(214,208,198,100))
                 .padding(innerPadding)
                 .padding(start = 24.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
@@ -432,7 +432,7 @@ fun CategoryChip(
     Box(
         modifier = Modifier
             .background(
-                color = if (isSelected) Color(238,238,238) else Color.White,
+                color = if (isSelected) Color(132,138,128,100) else Color(214,208,198,100),
                 shape = RoundedCornerShape(20.dp)
             )
             .then(
@@ -626,7 +626,7 @@ fun BottomNavigationBar(
                     spotColor = Color.Black.copy(alpha = 0.15f)
                 )
                 .background(
-                    color = Color(193,190,190),
+                    color = Color(205,146,102,100),
                     shape = RoundedCornerShape(30.dp)
                 ),
         ) {

@@ -99,7 +99,7 @@ fun UserInfoScreen(
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(Color.White)
+                .background(Color(214,208,198,100))
                 .padding(innerPadding)
         ) {
             Column(
@@ -221,7 +221,7 @@ fun UserInfoScreen(
             ) {
                 Text(
                     text = "Дальше",
-                    color = Color.Black,
+                    color = Color(132,138,128,100),
                     style = TextStyle(
                         fontFamily = PlayfairDisplayFontFamily,
                         fontSize = 16.sp

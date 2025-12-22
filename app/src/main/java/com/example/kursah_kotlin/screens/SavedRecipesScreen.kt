@@ -178,7 +178,7 @@ fun SavedRecipesScreen(
                 LazyColumn(
                     modifier = Modifier
                         .fillMaxSize()
-                        .background(Color.White)
+                        .background(Color(214,208,198,100))
                         .padding(innerPadding)
                         .padding(horizontal = 24.dp)
                 ) {

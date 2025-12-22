@@ -339,9 +339,9 @@ private fun EditableField(
             enabled = enabled,
             singleLine = true,
             colors = TextFieldDefaults.colors(
-                focusedContainerColor = Color(238, 238, 238,100),
-                unfocusedContainerColor = Color(238, 238, 238,100),
-                disabledContainerColor = Color(238, 238, 238,100),
+                focusedContainerColor = Color(214,208,198,100),
+                unfocusedContainerColor = Color(214,208,198,100),
+                disabledContainerColor = Color(214,208,198,100),
                 focusedIndicatorColor = Color.Transparent,
                 unfocusedIndicatorColor = Color.Transparent,
                 disabledIndicatorColor = Color.Transparent,

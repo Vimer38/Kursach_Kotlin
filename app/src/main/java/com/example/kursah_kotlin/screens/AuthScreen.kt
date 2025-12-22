@@ -128,7 +128,7 @@ fun AuthScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.White),
+            .background(Color(214,208,198,100)),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Column(
@@ -254,7 +254,7 @@ fun AuthScreen(
                     .fillMaxWidth()
                     .size(100.dp, 55.dp)
                     .padding(horizontal = 16.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = Color(193, 190, 190)),
+                colors = ButtonDefaults.buttonColors(containerColor = Color(132, 138, 128,100)),
                 shape = RoundedCornerShape(13.dp),
                 onClick = {
                     focusManager.clearFocus()
@@ -395,7 +395,7 @@ fun LoginRegisterToggle(
             .padding(horizontal = 16.dp)
             .height(43.dp)
             .clip(containerShape)
-            .background(Color(0xFFF1F1F1))
+            .background(Color(238,238,238,100))
             .padding(2.dp)
     ) {
         options.forEach { option ->
